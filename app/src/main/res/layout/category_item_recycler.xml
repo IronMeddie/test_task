@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:paddingHorizontal="12dp"
+    tools:context=".MainActivity">
+
+
+    <RelativeLayout
+        android:id="@+id/category_background_circle"
+        android:layout_width="71dp"
+        android:layout_height="71dp"
+        android:background="@drawable/ellipse_white"
+        android:backgroundTint="@color/orange_app"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/category_icon"
+            android:layout_width="18dp"
+            android:layout_height="30dp"
+            android:src="@drawable/ic_phones"
+            android:layout_centerInParent="true"
+            />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/category_name_tv"
+        style="@style/items_category"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="7dp"
+        android:textColor="@color/darkblue_app"
+        tools:text="@string/phones" />
+
+
+</LinearLayout>

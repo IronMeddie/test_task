@@ -10,4 +10,5 @@
     <color name="orange_app">#FF6E4E</color>
     <color name="darkblue_app">#010035</color>
     <color name="background_main">#F5F5F5</color>
+    <color name="transparent">#00000000 </color>
 </resources>

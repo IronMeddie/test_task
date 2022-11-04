@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <item
+        android:id="@+id/navigation_explorer"
+        android:icon="@drawable/ic_circle_12"
+        android:title="@string/explorer"
+        app:cnb_iconColor="@color/white"/>
+
+    <item
+        android:id="@+id/navigation_cart"
+        android:icon="@drawable/ic_shop"
+        android:title="@string/cart"
+        app:cnb_iconColor="@color/white"/>
+
+    <item
+        android:id="@+id/navigation_dashboard"
+        android:icon="@drawable/ic_like"
+        android:title="@string/favorite"
+        app:cnb_iconColor="@color/white"/>
+
+    <item
+        android:id="@+id/navigation_notifications"
+        android:icon="@drawable/ic_group"
+        android:title="@string/profile"
+        app:cnb_iconColor="@color/white"/>
+
+
+
+</menu>

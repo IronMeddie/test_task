@@ -1,17 +1,9 @@
 package com.ironmeddie.test_task
 
-import android.location.GnssAntennaInfo.Listener
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.children
-import androidx.core.view.get
-import androidx.navigation.NavController
-import androidx.navigation.NavDestination
 import androidx.navigation.findNavController
-import androidx.navigation.ui.setupWithNavController
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.ironmeddie.test_task.databinding.ActivityMainBinding
-import com.ismaeldivita.chipnavigation.ChipNavigationBar
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -29,6 +21,8 @@ class MainActivity : AppCompatActivity() {
         window.statusBarColor = getColor(R.color.darkblue_app)
         window.navigationBarColor = getColor(R.color.darkblue_app)
         setContentView(R.layout.splash_screen)
+
+
 
 
         MainScope().launch {
@@ -53,5 +47,7 @@ class MainActivity : AppCompatActivity() {
     fun adedtoCart(){
         cartItems++
     }
+
+
 
 }

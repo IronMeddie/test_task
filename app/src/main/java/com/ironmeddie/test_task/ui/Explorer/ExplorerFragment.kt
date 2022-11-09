@@ -1,16 +1,24 @@
 package com.ironmeddie.test_task.ui.Explorer
 
 
+import android.content.ClipData.Item
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.animation.Animatable
+import androidx.compose.animation.animateColor
+import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.core.*
+import androidx.compose.animation.fadeIn
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.magnifier
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
@@ -20,19 +28,33 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.fragment.app.Fragment
+import coil.compose.AsyncImage
+import com.google.accompanist.pager.ExperimentalPagerApi
+import com.google.accompanist.pager.HorizontalPager
+import com.google.accompanist.pager.calculateCurrentOffsetForPage
 import com.ironmeddie.test_task.R
 import com.ironmeddie.test_task.databinding.FragmentExplorerBinding
 import com.ironmeddie.test_task.domain.models.CategoryItem
+import com.ironmeddie.test_task.domain.models.HomeStore
+import com.ironmeddie.test_task.ui.theme.MyAppTextFieldColors
+import com.ironmeddie.test_task.ui.theme.MyTheme
+import com.ironmeddie.test_task.ui.theme.Typography
+import kotlin.math.absoluteValue
 
 
 class ExplorerFragment : Fragment() {
@@ -55,6 +77,9 @@ class ExplorerFragment : Fragment() {
                     CategoryItem("Health", R.drawable.health),
                     CategoryItem("Books", R.drawable.books),
                     CategoryItem("SSD", R.drawable.phone),
+                    CategoryItem("nol", R.drawable.phone),
+                    CategoryItem("fdgfdgs", R.drawable.phone),
+                    CategoryItem("SSfsgfsD", R.drawable.phone),
                 )
                 Phototes(categories)
             }
@@ -67,11 +92,10 @@ class ExplorerFragment : Fragment() {
         _binding = null
     }
 
-    val font = Font(R.font.mark_pro_heavy)
-
 
     @Composable
     private fun Phototes(categories: List<CategoryItem>) {
+
         Scaffold(
             topBar = { topBar() },
             backgroundColor = colorResource(id = R.color.GreyBackground)
@@ -79,65 +103,78 @@ class ExplorerFragment : Fragment() {
         { paddings ->
             LazyColumn(modifier = Modifier.padding(paddings)) {
                 item {
-                    Row(
-                        modifier = Modifier
+                    Headers(
+                        name = "Select Category",
+                        Modifier
                             .padding(start = 17.dp, end = 33.dp)
-                            .fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Text(
-                            text = "Select Category",
-                            color = colorResource(id = R.color.darkblue_app),
-                            fontSize = 25.sp,
-                            fontWeight = FontWeight(700),
-                            fontFamily = FontFamily(font)
-                        )
-                        Text(
-                            text = "view all",
-                            color = colorResource(id = R.color.orange_app),
-                            fontSize = 15.sp,
-                            fontWeight = FontWeight(500),
-                            fontFamily = FontFamily(font)
-                        )
-                    }
+                            .fillMaxWidth()
+                    )
                 }
                 item {
-                    verticalCategoryList(categories)
+                    verticalCategoryList(categories){
+
+                    }
                 }
                 item {
                     SearhPanel()
                 }
                 item {
-                    Row(
-                        modifier = Modifier
+                    Headers(
+                        "Hot sales",
+                        Modifier
                             .padding(start = 17.dp, end = 33.dp, top = 24.dp)
-                            .fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Text(
-                            text = "Hot sales",
-                            color = colorResource(id = R.color.darkblue_app),
-                            fontSize = 25.sp,
-                            fontWeight = FontWeight(700),
-                            fontFamily = FontFamily(font)
-                        )
-                        Text(
-                            text = "view all",
-                            color = colorResource(id = R.color.orange_app),
-                            fontSize = 15.sp,
-                            fontWeight = FontWeight(500),
-                            fontFamily = FontFamily(font)
-                        )
-                    }
+                            .fillMaxWidth()
+                    )
+                }
+                item {
+                    val list = listOf(
+                        HomeStore(1, true, true,"https://img.ibxk.com.br/2020/09/23/23104013057475.jpg?w=1120&h=420&mode=crop&scale=bot","Súper. Mega. Rápido.","Iphone 12"),
+                        HomeStore(2, true, false,"https://cdn-2.tstatic.net/kupang/foto/bank/images/pre-order-samsung-galaxy-a71-laris-manis-inilah-rekomendasi-ponsel-harga-rp-6-jutaan.jpg","Súper. Mega. Rápido.","Samsung Galaxy A71"))
+                    Carusel(list)
+                }
+                item {
+                    Headers(
+                        "Best seller",
+                        Modifier
+                            .padding(start = 17.dp, end = 33.dp)
+                            .fillMaxWidth()
+                    )
+                }
+                item { 
+                    Spacer(modifier = Modifier.size(dimensionResource(id = R.dimen.bottom_menu_height)))
                 }
             }
+        }
+
+    }
+
+
+    @Composable
+    fun Headers(name: String, modifier: Modifier) {
+        Row(
+            modifier = modifier,
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                text = name,
+                color = colorResource(id = R.color.darkblue_app),
+                fontSize = 25.sp,
+                fontWeight = FontWeight(700),
+                fontFamily = FontFamily(Font(R.font.mark_pro_heavy))
+            )
+            Text(
+                text = "view all",
+                color = colorResource(id = R.color.orange_app),
+                fontSize = 15.sp,
+                fontWeight = FontWeight(500),
+                fontFamily = FontFamily(Font(R.font.mark_pro_heavy))
+            )
         }
     }
 
     @Composable
-    private fun verticalCategoryList(categories: List<CategoryItem>) {
+    private fun verticalCategoryList(categories: List<CategoryItem>, onItemChanged: (item: CategoryItem) -> Unit) {
         var isselected by remember { mutableStateOf(0) }
         LazyRow(
             modifier = Modifier.padding(top = 24.dp),
@@ -146,10 +183,12 @@ class ExplorerFragment : Fragment() {
             itemsIndexed(categories) { i, item ->
                 kategotyItem(item, i == isselected) { itemNEw ->
                     isselected = categories.indexOf(itemNEw)
+                    onItemChanged(itemNEw)
                 }
             }
         }
     }
+
 
     @Composable
     private fun kategotyItem(
@@ -157,6 +196,24 @@ class ExplorerFragment : Fragment() {
         isselected: Boolean,
         choose: (item: CategoryItem) -> Unit
     ) {
+        val initialColor = colorResource(id = R.color.white)
+        val targetColor = colorResource(id = R.color.orange_app)
+
+        val animatecolor = remember { Animatable(initialColor) }
+        if (isselected){
+        LaunchedEffect(animatecolor) {
+                animatecolor.animateTo(
+                    targetValue = targetColor
+                    , animationSpec = tween(500)
+                )
+            }
+        }else LaunchedEffect(animatecolor) {
+            animatecolor.animateTo(
+                targetValue = initialColor
+                ,
+            )
+        }
+
         Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier
             .padding(horizontal = 11.dp)
             .clickable {
@@ -168,9 +225,12 @@ class ExplorerFragment : Fragment() {
                     .size(71.dp)
                     .shadow(elevation = 10.dp)
                     .background(
-                        if (isselected) colorResource(id = R.color.orange_app) else colorResource(
-                            id = R.color.white
-                        )
+                        color = animatecolor.asState().value
+
+//                        if (isselected) animateColorAsState(targetValue = colorResource(id = R.color.orange_app)).value else animateColorAsState(targetValue = colorResource(id = R.color.white)).value
+//                        if (isselected) colorResource(id = R.color.orange_app) else colorResource(
+//                            id = R.color.white
+//                        )
                     ), contentAlignment = Alignment.Center
             ) {
                 Icon(
@@ -187,7 +247,7 @@ class ExplorerFragment : Fragment() {
                 ),
                 fontSize = 12.sp,
                 fontWeight = FontWeight(500),
-                fontFamily = FontFamily(font),
+                fontFamily = FontFamily(Font(R.font.mark_pro_heavy)),
                 modifier = Modifier.padding(top = 7.dp)
             )
         }
@@ -203,7 +263,7 @@ class ExplorerFragment : Fragment() {
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Spacer(modifier = Modifier.padding(start = 5.dp))
+            Spacer(modifier = Modifier.padding(start = 35.dp))
             Row(
                 horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically
@@ -220,7 +280,7 @@ class ExplorerFragment : Fragment() {
                     color = colorResource(id = R.color.darkblue_app),
                     fontSize = 15.sp,
                     fontWeight = FontWeight(500),
-                    fontFamily = FontFamily(font),
+                    fontFamily = FontFamily(Font(R.font.mark_pro_heavy)),
                     modifier = Modifier.padding(start = 11.dp)
                 )
                 Icon(
@@ -245,44 +305,23 @@ class ExplorerFragment : Fragment() {
         }
     }
 
-    @Composable
-    fun MyAppTextFieldColors(
-        textColor: Color = colorResource(id = R.color.textColorSearch),
-        disabledTextColor: Color = colorResource(R.color.white),
-        backgroundColor: Color = colorResource(R.color.white),
-        cursorColor: Color = colorResource(R.color.white),
-        errorCursorColor: Color = colorResource(R.color.white),
-        placeholderColor: Color = colorResource(R.color.white),
-        disabledPlaceholderColor: Color = colorResource(R.color.white),
-        focusedBorderColor: Color = colorResource(R.color.transparent),
-        unfocusedBorderColor: Color = colorResource(R.color.transparent)
-    ) = TextFieldDefaults.textFieldColors(
-        textColor = textColor,
-        disabledTextColor = disabledTextColor,
-        backgroundColor = backgroundColor,
-        cursorColor = cursorColor,
-        errorCursorColor = errorCursorColor,
-        placeholderColor = placeholderColor,
-        disabledPlaceholderColor = disabledPlaceholderColor,
-        focusedIndicatorColor = focusedBorderColor,
-        unfocusedIndicatorColor = unfocusedBorderColor
-
-    )
-
 
     @Composable
     fun SearhPanel() {
         var search by remember {
             mutableStateOf("")
         }
-        Row( verticalAlignment = Alignment.CenterVertically, modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = 34.dp, start = 32.dp, end = 32.dp )
-            , horizontalArrangement = Arrangement.SpaceBetween) {
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 35.dp, start = 32.dp, end = 32.dp),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
             OutlinedTextField(
                 modifier = Modifier
-                    .height(55.dp).fillMaxWidth(0.8f)
-                    ,
+                    .height(55.dp)
+                    .fillMaxWidth(0.8f),
                 shape = RoundedCornerShape(50.dp),
                 colors = MyAppTextFieldColors(),
                 leadingIcon = {
@@ -300,7 +339,7 @@ class ExplorerFragment : Fragment() {
                         color = colorResource(id = R.color.textColorSearch),
                         fontSize = 12.sp,
                         fontWeight = FontWeight(400),
-                        fontFamily = FontFamily(font)
+                        fontFamily = FontFamily(Font(R.font.mark_pro_heavy))
                     )
 
                 },
@@ -315,9 +354,14 @@ class ExplorerFragment : Fragment() {
                         .background(colorResource(id = R.color.orange_app)),
                     contentAlignment = Alignment.Center
                 ) {
-                Icon(painter = painterResource(id = R.drawable.group_1), contentDescription = null, modifier = Modifier.size(23.dp), tint = colorResource(
-                    id = R.color.white
-                ))
+                    Icon(
+                        painter = painterResource(id = R.drawable.group_1),
+                        contentDescription = null,
+                        modifier = Modifier.size(23.dp),
+                        tint = colorResource(
+                            id = R.color.white
+                        )
+                    )
                 }
             }
 
@@ -353,6 +397,81 @@ class ExplorerFragment : Fragment() {
 
     }
 
+    @OptIn(ExperimentalPagerApi::class)
+    @Composable
+    fun Carusel(homeStore: List<HomeStore>) {
+
+        HorizontalPager(
+            count = homeStore.size, modifier = Modifier
+                .padding(horizontal = 15.dp, vertical = 15.dp)
+                .fillMaxWidth()
+        ) { page ->
+            Card(shape = RoundedCornerShape(10.dp)) {
+                AsyncImage(
+                    model = homeStore[page].picture,
+                    contentDescription = null,
+                    placeholder = painterResource(R.drawable.test_dr),
+                    contentScale = ContentScale.Crop, modifier = Modifier.height(182.dp )
+                )
+                Column(Modifier.padding(start = 25.dp, top = 14.dp)) {
+                    if (homeStore[page].is_new){
+                        Box(modifier = Modifier
+                            .clip(CircleShape)
+                            .background(colorResource(id = R.color.orange_app))
+                            .size(27.dp) , contentAlignment = Alignment.Center) {
+                            Text("New", color = colorResource(id = R.color.white), style = TextStyle(
+                                fontFamily = FontFamily(Font(R.font.sf_pro_d)),
+                                fontWeight = FontWeight(700),
+                                fontSize = 10.sp
+                            ))
+                        }
+                    }else{
+                        Spacer(modifier = Modifier.size(27.dp))
+                    }
+                    Text(
+                        text = homeStore[page].title,
+                        modifier = Modifier.padding(top =10.dp),
+                        color = colorResource(
+                            id = R.color.white
+                        ), style = TextStyle(
+                            fontFamily = FontFamily(Font(R.font.sf_pro_d)),
+                            fontWeight = FontWeight(700),
+                            fontSize = 25.sp, letterSpacing = (-0.01).sp, lineHeight = 29.83.sp
+                        ))
+                    Text(
+                        text = homeStore[page].subtitle,
+                        color = colorResource(
+                            id = R.color.white
+                        ),  style = TextStyle(
+                            fontFamily = FontFamily(Font(R.font.sf_pro_d)),
+                            fontWeight = FontWeight(400),
+                            fontSize = 11.sp, letterSpacing = (-0.03).sp, lineHeight = 13.13.sp
+                        )
+                    )
+                    Box(
+                        modifier = Modifier
+                            .padding(top = 25.dp)
+                            .width(98.dp)
+                            .height(23.dp)
+                            .clip(shape = RoundedCornerShape(5.dp))
+                            .background(Color.White), contentAlignment = Alignment.Center
+                    ) {
+                        Text(text = "Buy now!", style = TextStyle(
+                            fontFamily = FontFamily(Font(R.font.sf_pro_d)),
+                            fontWeight = FontWeight(700),
+                            fontSize = 11.sp, letterSpacing = (-0.03).sp, lineHeight = 13.13.sp
+                        ))
+                    }
+
+                }
+
+
+
+
+            }
+        }
+    }
+
 
     @Preview(showBackground = true)
     @Composable
@@ -364,11 +483,14 @@ class ExplorerFragment : Fragment() {
             CategoryItem("Books", R.drawable.books),
             CategoryItem("SSD", R.drawable.phone),
         )
-        Phototes(categories)
+        MyTheme() {
+            Phototes(categories)
+        }
+
     }
 
-
 }
+
 
 
 

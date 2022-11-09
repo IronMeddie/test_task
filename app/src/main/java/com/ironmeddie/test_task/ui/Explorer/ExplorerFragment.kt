@@ -1,24 +1,20 @@
 package com.ironmeddie.test_task.ui.Explorer
 
 
-import android.content.ClipData.Item
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.GridLayout
 import androidx.compose.animation.Animatable
-import androidx.compose.animation.animateColor
-import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.*
-import androidx.compose.animation.fadeIn
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.grid.*
 import androidx.compose.foundation.lazy.itemsIndexed
-import androidx.compose.foundation.magnifier
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
@@ -28,7 +24,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.compose.ui.res.colorResource
@@ -38,23 +33,21 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.fragment.app.Fragment
 import coil.compose.AsyncImage
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
-import com.google.accompanist.pager.calculateCurrentOffsetForPage
 import com.ironmeddie.test_task.R
 import com.ironmeddie.test_task.databinding.FragmentExplorerBinding
+import com.ironmeddie.test_task.domain.models.BestSeller
 import com.ironmeddie.test_task.domain.models.CategoryItem
 import com.ironmeddie.test_task.domain.models.HomeStore
 import com.ironmeddie.test_task.ui.theme.MyAppTextFieldColors
 import com.ironmeddie.test_task.ui.theme.MyTheme
-import com.ironmeddie.test_task.ui.theme.Typography
-import kotlin.math.absoluteValue
 
 
 class ExplorerFragment : Fragment() {
@@ -105,6 +98,7 @@ class ExplorerFragment : Fragment() {
                 item {
                     Headers(
                         name = "Select Category",
+                        "view all",
                         Modifier
                             .padding(start = 17.dp, end = 33.dp)
                             .fillMaxWidth()
@@ -120,7 +114,8 @@ class ExplorerFragment : Fragment() {
                 }
                 item {
                     Headers(
-                        "Hot sales",
+                        "Hot Sales",
+                        "see more",
                         Modifier
                             .padding(start = 17.dp, end = 33.dp, top = 24.dp)
                             .fillMaxWidth()
@@ -134,11 +129,16 @@ class ExplorerFragment : Fragment() {
                 }
                 item {
                     Headers(
-                        "Best seller",
+                        "Best Seller","see more",
                         Modifier
                             .padding(start = 17.dp, end = 33.dp)
                             .fillMaxWidth()
                     )
+                }
+                item {
+                    val list = listOf(BestSeller(1500, 111,true,"https://shop.gadgetufa.ru/images/upload/52534-smartfon-samsung-galaxy-s20-ultra-12-128-chernyj_1024.jpg",1047, "Samsung Galaxy s20 Ultra"),
+                        BestSeller(400, 222,true,"https://mi92.ru/wp-content/uploads/2020/03/smartfon-xiaomi-mi-10-pro-12-256gb-global-version-starry-blue-sinij-1.jpg",300, "Xiaomi Mi 10 Pro"))
+                    bestSellers(list)
                 }
                 item { 
                     Spacer(modifier = Modifier.size(dimensionResource(id = R.dimen.bottom_menu_height)))
@@ -150,7 +150,7 @@ class ExplorerFragment : Fragment() {
 
 
     @Composable
-    fun Headers(name: String, modifier: Modifier) {
+    fun Headers(name: String, goTo: String, modifier: Modifier) {
         Row(
             modifier = modifier,
             horizontalArrangement = Arrangement.SpaceBetween,
@@ -161,14 +161,16 @@ class ExplorerFragment : Fragment() {
                 color = colorResource(id = R.color.darkblue_app),
                 fontSize = 25.sp,
                 fontWeight = FontWeight(700),
-                fontFamily = FontFamily(Font(R.font.mark_pro_heavy))
+                fontFamily = FontFamily(Font(R.font.mark_pro_heavy)),
+                lineHeight = (31.69).sp,
+                letterSpacing = (-0.01).sp
             )
             Text(
-                text = "view all",
+                text = goTo,
                 color = colorResource(id = R.color.orange_app),
                 fontSize = 15.sp,
                 fontWeight = FontWeight(500),
-                fontFamily = FontFamily(Font(R.font.mark_pro_heavy))
+                fontFamily = FontFamily(Font(R.font.mark_pro))
             )
         }
     }
@@ -318,9 +320,9 @@ class ExplorerFragment : Fragment() {
                 .padding(top = 35.dp, start = 32.dp, end = 32.dp),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            OutlinedTextField(
+            TextField(
                 modifier = Modifier
-                    .height(55.dp)
+                    .height(45.dp)
                     .fillMaxWidth(0.8f),
                 shape = RoundedCornerShape(50.dp),
                 colors = MyAppTextFieldColors(),
@@ -339,14 +341,16 @@ class ExplorerFragment : Fragment() {
                         color = colorResource(id = R.color.textColorSearch),
                         fontSize = 12.sp,
                         fontWeight = FontWeight(400),
-                        fontFamily = FontFamily(Font(R.font.mark_pro_heavy))
+                        fontFamily = FontFamily(Font(R.font.mark_pro)),
+                        lineHeight = (15.21).sp,
+                        letterSpacing = (-0.03).sp,
                     )
 
                 },
                 value = search,
                 onValueChange = { search = it },
             )
-            Box(modifier = Modifier.padding(top = 8.dp)) {
+            Box(modifier = Modifier.padding()) {
                 Box(
                     modifier = Modifier
                         .clip(CircleShape)
@@ -366,34 +370,6 @@ class ExplorerFragment : Fragment() {
             }
 
         }
-
-//        TextField(value = search,
-//            onValueChange = { search = it },
-//            modifier = Modifier
-//                .padding(start = 32.dp)
-//                .width(300.dp),
-//            shape = RoundedCornerShape(50.dp),
-//            colors = MyAppTextFieldColors(), leadingIcon = {
-//                Icon(
-//                    painter = painterResource(id = R.drawable.ic_search),
-//                    contentDescription = "search_icon_input",
-//                    tint = colorResource(id = R.color.orange_app),
-//                    modifier = Modifier
-//                        .padding(horizontal = 24.dp)
-//                )
-//            },
-//            label = {
-//                Row(verticalAlignment = Alignment.CenterVertically) {
-//
-//                    Text(
-//                        text = "Search",
-//                        color = colorResource(id = R.color.textColorSearch),
-//                        fontSize = 12.sp,
-//                        fontWeight = FontWeight(400),
-//                        fontFamily = FontFamily(font)
-//                    )
-//                }})
-
 
     }
 
@@ -465,12 +441,83 @@ class ExplorerFragment : Fragment() {
 
                 }
 
+            }
+        }
+    }
 
 
+
+    @Composable
+    private fun bestSellers(list: List<BestSeller>){
+        for (i in 0 until list.size step 2){
+            Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier
+                .padding(horizontal = 10.dp)
+                .fillMaxWidth()) {
+                Box(modifier = Modifier.fillMaxWidth(0.5f)) {
+                    bestSellerItem(list[i])
+                }
+                if (i<=list.size-2) Box(modifier = Modifier.fillMaxWidth()) {
+                    bestSellerItem(list[i+1])
+                }
 
             }
         }
     }
+
+
+    @Preview(showBackground = true)
+    @Composable
+    fun pfsdfgdgsdf(){
+        val vcvxc= BestSeller(400, 222,true,"https://mi92.ru/wp-content/uploads/2020/03/smartfon-xiaomi-mi-10-pro-12-256gb-global-version-starry-blue-sinij-1.jpg",300, "Xiaomi Mi 10 Pro")
+        bestSellerItem(vcvxc)
+    }
+
+    @Composable
+    private fun bestSellerItem(item: BestSeller){
+
+        val style1 = TextStyle(
+            fontFamily = FontFamily(Font(R.font.mark_pro_heavy)),
+            fontWeight = FontWeight(700),
+            fontSize = 16.sp,
+            lineHeight = (20.28).sp,
+            letterSpacing = (-0.02).sp,
+            color = colorResource(id = R.color.darkblue_app)
+        )
+        val style2 = TextStyle(
+            fontFamily = FontFamily(Font(R.font.mark_pro_heavy)),
+            fontWeight = FontWeight(500),
+            fontSize = 10.sp,
+            lineHeight = (12.68).sp,
+            letterSpacing = (-0.03).sp,
+            color = colorResource(id = R.color.price_witout_discont),
+            textDecoration = TextDecoration.LineThrough
+        )
+        val style3 = TextStyle(
+            fontFamily = FontFamily(Font(R.font.mark_pro)),
+            fontWeight = FontWeight(400),
+            fontSize = 10.sp,
+            lineHeight = (12.68).sp,
+            letterSpacing = (-0.03).sp,
+            color = colorResource(id = R.color.darkblue_app)
+        )
+        Box(modifier = Modifier
+            .padding(horizontal = 7.dp)
+            .clip(RoundedCornerShape(10.dp))
+            .background(colorResource(id = R.color.white))
+            .fillMaxSize()
+            ) {
+            Column() {
+                AsyncImage(model = item.picture, contentDescription = null, placeholder = painterResource(id = R.drawable.ic_test_bestsellers), modifier = Modifier.width(187.dp))
+                Row(modifier = Modifier.padding(start = 21.dp), verticalAlignment = Alignment.Bottom) {
+                    Text(text = "$" + item.discount_price.toString(), style = style1)
+                    Text(text = "$" + item.price_without_discount.toString(), style = style2, modifier = Modifier.padding(start = 7.dp))
+                }
+                Text(text = item.title, style = style3, modifier = Modifier.padding(start = 21.dp, bottom = 15.dp))
+            }
+
+        }
+    }
+
 
 
     @Preview(showBackground = true)
@@ -483,10 +530,7 @@ class ExplorerFragment : Fragment() {
             CategoryItem("Books", R.drawable.books),
             CategoryItem("SSD", R.drawable.phone),
         )
-        MyTheme() {
-            Phototes(categories)
-        }
-
+        Phototes(categories)
     }
 
 }

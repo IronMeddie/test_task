@@ -29,7 +29,7 @@ private val LightColorPalette = lightColors(
     primaryVariant = mainOrange,
     secondary = maindarckBlue,
     background = Background,
-    onBackground = Background
+    onBackground = Background,
 )
     /* Other default colors to override
     background = Color.White,

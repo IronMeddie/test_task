@@ -57,10 +57,7 @@ import com.ironmeddie.test_task.domain.models.BestSeller
 import com.ironmeddie.test_task.domain.models.CategoryItem
 import com.ironmeddie.test_task.domain.models.HomeStore
 import com.ironmeddie.test_task.presentation.MainActivity
-import com.ironmeddie.test_task.presentation.ui.theme.MyAppTextFieldColors
-import com.ironmeddie.test_task.presentation.ui.theme.MyTheme
-import com.ironmeddie.test_task.presentation.ui.theme.White
-import com.ironmeddie.test_task.presentation.ui.theme.mainOrange
+import com.ironmeddie.test_task.presentation.ui.theme.*
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.channels.produce
@@ -121,7 +118,7 @@ class ExplorerFragment : Fragment() {
         BottomSheetScaffold(
              sheetContent = {
                 Filter()
-            }, sheetShape = RoundedCornerShape(30.dp), scaffoldState = scaffoldState, sheetPeekHeight = 0.dp
+            }, sheetShape = RoundedCornerShape(30.dp), scaffoldState = scaffoldState, sheetPeekHeight = 0.dp, sheetElevation = 20.dp
         )
         { paddings ->
             LazyColumn(modifier = Modifier.padding(paddings)) {
@@ -202,7 +199,7 @@ class ExplorerFragment : Fragment() {
 
 
     @Composable
-    fun Headers(name: String, goTo: String, modifier: Modifier) {
+    private fun Headers(name: String, goTo: String, modifier: Modifier) {
         Row(
             modifier = modifier,
             horizontalArrangement = Arrangement.SpaceBetween,
@@ -271,12 +268,11 @@ class ExplorerFragment : Fragment() {
             }) {
             Box(
                 modifier = Modifier
+                    .shadow(20.dp, CircleShape, spotColor = Shadow)
                     .clip(CircleShape)
                     .size(71.dp)
-                    .background(
-                        color = animatecolor.asState().value
-                    )
-                    , contentAlignment = Alignment.Center
+                    .background(color = animatecolor.asState().value)
+                    , contentAlignment = Alignment.Center,
             ) {
                 Icon(
                     painter = painterResource(id = item.icon),
@@ -347,7 +343,7 @@ class ExplorerFragment : Fragment() {
 
 
     @Composable
-    fun SearhPanel() {
+    private fun SearhPanel() {
         var search by remember {
             mutableStateOf("")
         }
@@ -407,7 +403,7 @@ class ExplorerFragment : Fragment() {
 
     @OptIn(ExperimentalPagerApi::class)
     @Composable
-    fun Carusel(homeStore: List<HomeStore>) {
+    private fun Carusel(homeStore: List<HomeStore>) {
         HorizontalPager(
             count = homeStore.size, modifier = Modifier
                 .padding(horizontal = 15.dp, vertical = 15.dp)
@@ -640,7 +636,7 @@ class ExplorerFragment : Fragment() {
 
 
     @Composable
-    fun dropmenu(){
+    private fun dropmenu(){
 
         val list = listOf("Apple", "Acer", "Samsung", "OnePlus")
 

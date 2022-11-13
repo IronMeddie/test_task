@@ -1,5 +1,6 @@
 package com.ironmeddie.test_task.data
 
+import com.ironmeddie.test_task.domain.models.Details
 import com.ironmeddie.test_task.domain.models.ResponseMainScreen
 import retrofit2.Response
 import retrofit2.http.GET
@@ -11,11 +12,11 @@ interface ApiServise {
     suspend fun getMainScreenInfo() : Response<ResponseMainScreen>
 
 //    @GET("/v3/53539a72-3c5f-4f30-bbb1-6ca10d42c149")
-//    suspend fun getEverything() : Response<ResponseMainScreen>
+//    suspend fun getEverything() : Response<Details>
 //
 //
-//    @GET("/v3/6c14c560-15c6-4248-b9d2-b4508df7d4f5")
-//    suspend fun getHeadlines(
+    @GET("/v3/6c14c560-15c6-4248-b9d2-b4508df7d4f5")
+    suspend fun getDetails() : Response<Details>
 //        @Query("country") countrycode : String = "ru",
 //        @Query("page") page : Int = 1,
 //        @Query("apiKey") apiKey : String = APIKEY,

@@ -17,6 +17,7 @@
         app:navGraph="@navigation/mobile_navigation" />
 
     <com.ismaeldivita.chipnavigation.ChipNavigationBar
+
         android:id="@+id/bottom_nav_menu"
         android:layout_width="match_parent"
         android:layout_height="@dimen/bottom_menu_height"

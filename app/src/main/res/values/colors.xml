@@ -17,6 +17,7 @@
     <color name="GreyIcons">#FFB3B3C3 </color>
     <color name="textColorSearch">#80010035</color>
     <color name="price_witout_discont">#CCCCCC</color>
+    <color name="border_color">#DCDCDC</color>
 
 
 

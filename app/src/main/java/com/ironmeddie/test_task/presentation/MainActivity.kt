@@ -1,18 +1,22 @@
-package com.ironmeddie.test_task
+package com.ironmeddie.test_task.presentation
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
+import com.ironmeddie.test_task.R
 import com.ironmeddie.test_task.databinding.ActivityMainBinding
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-
     var cartItems = 5  //  счетчик добавленных  в корзину. потом удалить
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,7 +25,6 @@ class MainActivity : AppCompatActivity() {
         window.statusBarColor = getColor(R.color.darkblue_app)
         window.navigationBarColor = getColor(R.color.darkblue_app)
         setContentView(R.layout.splash_screen)
-
 
 
 
@@ -34,20 +37,30 @@ class MainActivity : AppCompatActivity() {
             val bottomMenu = binding.bottomNavMenu
             val navController = findNavController(R.id.nav_host)
 
-
-            bottomMenu.setOnItemSelectedListener {
-                navController.navigate(it)
-                navController.addOnDestinationChangedListener { controller, destination, arguments -> controller.popBackStack(it,true,true) }
-            }
             bottomMenu.setItemSelected(R.id.navigation_explorer)
-            bottomMenu.showBadge(R.id.navigation_cart,cartItems)
+            bottomMenu.setOnItemSelectedListener {
+                    val builder = NavOptions.Builder()
+                        .setPopUpTo(R.id.mobile_navigation,inclusive = true,true)
+                    val options = builder.build()
+                    navController.navigate(it, null, options)
+            }
         }
     }
 
-    fun adedtoCart(){
+
+    fun hideBottomMenu(){
+        binding.bottomNavMenu.visibility = View.GONE
+    }
+    fun showBottomMenu(){
+        binding.bottomNavMenu.visibility = View.VISIBLE
+    }
+
+
+    fun adedtoCart() {
         cartItems++
     }
 
 
-
 }
+
+

@@ -1,13 +1,13 @@
-package com.ironmeddie.test_task.ui.home
+package com.ironmeddie.test_task.presentation.ui.notifications
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class CartViewModel : ViewModel() {
+class NotificationsViewModel : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
-        value = "This is Cart Fragment"
+        value = "This is notifications Fragment"
     }
     val text: LiveData<String> = _text
 }

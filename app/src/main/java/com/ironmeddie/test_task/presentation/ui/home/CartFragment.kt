@@ -1,4 +1,4 @@
-package com.ironmeddie.test_task.ui.home
+package com.ironmeddie.test_task.presentation.ui.home
 
 import android.os.Bundle
 import android.view.LayoutInflater

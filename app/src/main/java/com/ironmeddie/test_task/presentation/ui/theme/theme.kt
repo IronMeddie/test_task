@@ -1,27 +1,36 @@
-package com.ironmeddie.test_task.ui.theme
+package com.ironmeddie.test_task.presentation.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ironmeddie.test_task.R
 
 private val DarkColorPalette = darkColors(
+
 //    primary = Purple200,
 //    primaryVariant = Purple700,
 //    secondary = Teal200
 )
 
 private val LightColorPalette = lightColors(
-    background = Color(R.color.background_main))
+    primary = White,
+    primaryVariant = mainOrange,
+    secondary = maindarckBlue,
+    background = Background,
+    onBackground = Background
+)
     /* Other default colors to override
     background = Color.White,
     surface = Color.White,
@@ -39,7 +48,6 @@ fun MyTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () 
     } else {
         LightColorPalette
     }
-
     MaterialTheme(
         colors = colors,
         typography = Typography,
@@ -59,14 +67,78 @@ val Shapes = Shapes(
 val Typography = Typography(
     body1 = TextStyle(
         fontFamily = FontFamily(Font(R.font.mark_pro_heavy)),
-        fontWeight = FontWeight.Normal,
-        fontSize = 16.sp
+        fontWeight = FontWeight(700),
+        fontSize = 16.sp,
+        lineHeight = (20.28).sp,
+        letterSpacing = (-0.02).sp,
+        color = maindarckBlue
     ),
     body2 = TextStyle(
-        fontFamily = FontFamily(Font(R.font.mark_pro_heavy)),
-        fontWeight = FontWeight(700),
-        fontSize = 10.sp
+    fontFamily = FontFamily(Font(R.font.mark_pro_heavy)),
+    fontWeight = FontWeight(500),
+    fontSize = 10.sp,
+    lineHeight = (12.68).sp,
+    letterSpacing = (-0.03).sp,
+    color = PriceWitoutD,
+    textDecoration = TextDecoration.LineThrough
+),
+
+    h1 = TextStyle(
+        fontFamily = FontFamily(Font(R.font.mark_pro)),
+        fontWeight = FontWeight(500),
+        fontSize = 18.sp,
+        lineHeight = 23.sp,
+        letterSpacing = (-0.02).sp,
+        color = maindarckBlue
     ),
+
+    h2 = TextStyle(
+        color = maindarckBlue,
+        fontSize = 25.sp,
+        fontWeight = FontWeight(700),
+        fontFamily = FontFamily(Font(R.font.mark_pro_heavy)),
+        lineHeight = (31.69).sp,
+        letterSpacing = (-0.01).sp
+    ),
+
+    h3 = TextStyle(
+        color = mainOrange,
+        fontSize = 15.sp,
+        fontWeight = FontWeight(500),
+        fontFamily = FontFamily(Font(R.font.mark_pro))
+    ),
+
+    h4 = TextStyle(
+        fontSize = 12.sp,
+        fontWeight = FontWeight(400),
+        fontFamily = FontFamily(Font(R.font.mark_pro)),
+        lineHeight = (15.21).sp,
+        letterSpacing = (-0.03).sp
+    ),
+    h5 = TextStyle(
+        fontSize = 12.sp,
+        fontWeight = FontWeight(500),
+        fontFamily = FontFamily(Font(R.font.mark_pro_heavy))
+    ),
+    h6 = TextStyle(
+        fontFamily = FontFamily(Font(R.font.sf_pro_d)),
+        fontWeight = FontWeight(700),
+        fontSize = 25.sp, letterSpacing = (-0.01).sp, lineHeight = 29.83.sp
+    ),
+    subtitle1 = TextStyle(
+    fontFamily = FontFamily(Font(R.font.mark_pro)),
+    fontWeight = FontWeight(400),
+    fontSize = 10.sp,
+    lineHeight = (12.68).sp,
+    letterSpacing = (-0.03).sp,
+    color = maindarckBlue
+)
+
+
+
+
+
+
 
 
 

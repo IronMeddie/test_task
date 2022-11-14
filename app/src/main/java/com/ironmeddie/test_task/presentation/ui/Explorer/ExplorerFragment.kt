@@ -157,13 +157,7 @@ class ExplorerFragment : Fragment() {
                     )
                 }
                 item {
-                    val listHot = remember { mutableStateOf(listOf<HomeStore>()) }
-                    lifecycleScope.launchWhenStarted {
-                        viewmodel.hotSales
-                            .collect { list ->
-                                listHot.value = list.toMutableList()
-                            }
-                    }
+                    val listHot = viewmodel.hotSales.collectAsState()
 //                        listOf(
 //                        HomeStore(1, true, true,"https://img.ibxk.com.br/2020/09/23/23104013057475.jpg?w=1120&h=420&mode=crop&scale=bot","Súper. Mega. Rápido.","Iphone 12"),
 //                        HomeStore(2, true, false,"https://cdn-2.tstatic.net/kupang/foto/bank/images/pre-order-samsung-galaxy-a71-laris-manis-inilah-rekomendasi-ponsel-harga-rp-6-jutaan.jpg","Súper. Mega. Rápido.","Samsung Galaxy A71"))
@@ -178,13 +172,7 @@ class ExplorerFragment : Fragment() {
                     )
                 }
                 item {
-                    val bestSellers = remember { mutableStateOf(listOf<BestSeller>()) }
-                    lifecycleScope.launchWhenStarted {
-                        viewmodel.bestSellers
-                            .collect { list ->
-                                bestSellers.value = list.toMutableList()
-                            }
-                    }
+                    val bestSellers = viewmodel.bestSellers.collectAsState()
 //                    val list = listOf(BestSeller(1500, 111,true,"https://shop.gadgetufa.ru/images/upload/52534-smartfon-samsung-galaxy-s20-ultra-12-128-chernyj_1024.jpg",1047, "Samsung Galaxy s20 Ultra"),
 //                        BestSeller(400, 222,true,"https://mi92.ru/wp-content/uploads/2020/03/smartfon-xiaomi-mi-10-pro-12-256gb-global-version-starry-blue-sinij-1.jpg",300, "Xiaomi Mi 10 Pro"))
                     bestSellers(bestSellers.value)
@@ -509,7 +497,7 @@ class ExplorerFragment : Fragment() {
                 .background(colorResource(id = R.color.white))
                 .fillMaxSize()
                 .clickable {
-                           findNavController().navigate(R.id.navigation_details)
+                    findNavController().navigate(R.id.navigation_details)
                 }, contentAlignment = Alignment.TopEnd
         ) {
             Column(modifier = Modifier.fillMaxWidth()) {

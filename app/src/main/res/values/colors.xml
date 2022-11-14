@@ -18,6 +18,7 @@
     <color name="textColorSearch">#80010035</color>
     <color name="price_witout_discont">#CCCCCC</color>
     <color name="border_color">#DCDCDC</color>
+    <color name="inactive">#00000080</color>
 
 
 

@@ -31,14 +31,14 @@ private val LightColorPalette = lightColors(
     background = Background,
     onBackground = Background,
 )
-    /* Other default colors to override
-    background = Color.White,
-    surface = Color.White,
-    onPrimary = Color.White,
-    onSecondary = Color.Black,
-    onBackground = Color.Black,
-    onSurface = Color.Black,
-    */
+/* Other default colors to override
+background = Color.White,
+surface = Color.White,
+onPrimary = Color.White,
+onSecondary = Color.Black,
+onBackground = Color.Black,
+onSurface = Color.Black,
+*/
 
 
 @Composable
@@ -63,7 +63,6 @@ val Shapes = Shapes(
 )
 
 
-
 val Typography = Typography(
     body1 = TextStyle(
         fontFamily = FontFamily(Font(R.font.mark_pro_heavy)),
@@ -74,14 +73,14 @@ val Typography = Typography(
         color = maindarckBlue
     ),
     body2 = TextStyle(
-    fontFamily = FontFamily(Font(R.font.mark_pro_heavy)),
-    fontWeight = FontWeight(500),
-    fontSize = 10.sp,
-    lineHeight = (12.68).sp,
-    letterSpacing = (-0.03).sp,
-    color = PriceWitoutD,
-    textDecoration = TextDecoration.LineThrough
-),
+        fontFamily = FontFamily(Font(R.font.mark_pro_heavy)),
+        fontWeight = FontWeight(500),
+        fontSize = 10.sp,
+        lineHeight = (12.68).sp,
+        letterSpacing = (-0.03).sp,
+        color = PriceWitoutD,
+        textDecoration = TextDecoration.LineThrough
+    ),
 
     h1 = TextStyle(
         fontFamily = FontFamily(Font(R.font.mark_pro)),
@@ -126,21 +125,19 @@ val Typography = Typography(
         fontSize = 25.sp, letterSpacing = (-0.01).sp, lineHeight = 29.83.sp
     ),
     subtitle1 = TextStyle(
-    fontFamily = FontFamily(Font(R.font.mark_pro)),
-    fontWeight = FontWeight(400),
-    fontSize = 10.sp,
-    lineHeight = (12.68).sp,
-    letterSpacing = (-0.03).sp,
-    color = maindarckBlue
-)
-
-
-
-
-
-
-
-
+        fontFamily = FontFamily(Font(R.font.mark_pro)),
+        fontWeight = FontWeight(400),
+        fontSize = 10.sp,
+        lineHeight = (12.68).sp,
+        letterSpacing = (-0.03).sp,
+        color = maindarckBlue
+    ),
+    subtitle2 = TextStyle(
+        fontFamily = FontFamily(Font(R.font.mark_pro_heavy)),
+        fontWeight = FontWeight(400),
+        fontSize = 11.sp,
+        color = GreyIcons
+    )
 
 
     /* Other default text styles to override

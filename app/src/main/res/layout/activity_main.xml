@@ -28,7 +28,8 @@
         app:cnb_iconSize="18dp"
         app:cnb_unselectedColor="@color/white"
         app:cnb_textAppearance="@style/menu_items"
-        app:cnb_animationDuration="175"/>
+        app:cnb_animationDuration="175"
+        app:cnb_badgeColor="@color/orange_app"/>
 
 
 

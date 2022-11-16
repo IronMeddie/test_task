@@ -1,9 +1,12 @@
-package com.ironmeddie.test_task.presentation.ui.details
+package com.ironmeddie.test_task.presentation.ui.cart
 
 import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ironmeddie.test_task.data.Repository
+import com.ironmeddie.test_task.domain.models.Cart
 import com.ironmeddie.test_task.domain.models.Details
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -12,12 +15,13 @@ import kotlinx.coroutines.launch
 import java.io.IOException
 import javax.inject.Inject
 
+
 @HiltViewModel
-class DetailsViewModel @Inject constructor(private val repository: Repository) : ViewModel() {
+class CartViewModel @Inject constructor(private val repository : Repository) : ViewModel() {
 
+    private val _cart : MutableStateFlow<Cart> = MutableStateFlow(Cart(listOf(), "","",0))
+    val cart : StateFlow<Cart> = _cart
 
-    private val _details : MutableStateFlow<Details> = MutableStateFlow(Details(title = "Loading.." ))
-    val details : StateFlow<Details> = _details
 
     init {
         getInfo()
@@ -27,10 +31,10 @@ class DetailsViewModel @Inject constructor(private val repository: Repository) :
     fun getInfo() =
         viewModelScope.launch {
             try {
-                val response = repository.getDetails()
+                val response = repository.getCart()
                 if (response.isSuccessful) {
                     response.body().let { res ->
-                        _details.value = res!!
+                        _cart.value = res!!
                     }
                 } else Log.d("chekCode", response.message())
             }catch (e: IOException){
@@ -38,4 +42,5 @@ class DetailsViewModel @Inject constructor(private val repository: Repository) :
             }
 
         }
+
 }

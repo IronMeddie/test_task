@@ -65,7 +65,7 @@ val Shapes = Shapes(
 
 val Typography = Typography(
     body1 = TextStyle(
-        fontFamily = FontFamily(Font(R.font.mark_pro_heavy)),
+        fontFamily = FontFamily(Font(R.font.mark_pro_new)),
         fontWeight = FontWeight(700),
         fontSize = 16.sp,
         lineHeight = (20.28).sp,
@@ -73,7 +73,7 @@ val Typography = Typography(
         color = maindarckBlue
     ),
     body2 = TextStyle(
-        fontFamily = FontFamily(Font(R.font.mark_pro_heavy)),
+        fontFamily = FontFamily(Font(R.font.mark_pro_new)),
         fontWeight = FontWeight(500),
         fontSize = 10.sp,
         lineHeight = (12.68).sp,
@@ -83,7 +83,7 @@ val Typography = Typography(
     ),
 
     h1 = TextStyle(
-        fontFamily = FontFamily(Font(R.font.mark_pro)),
+        fontFamily = FontFamily(Font(R.font.mark_pro_new)),
         fontWeight = FontWeight(500),
         fontSize = 18.sp,
         lineHeight = 23.sp,
@@ -104,20 +104,20 @@ val Typography = Typography(
         color = mainOrange,
         fontSize = 15.sp,
         fontWeight = FontWeight(500),
-        fontFamily = FontFamily(Font(R.font.mark_pro))
+        fontFamily = FontFamily(Font(R.font.mark_pro_new))
     ),
 
     h4 = TextStyle(
         fontSize = 12.sp,
         fontWeight = FontWeight(400),
-        fontFamily = FontFamily(Font(R.font.mark_pro)),
+        fontFamily = FontFamily(Font(R.font.mark_pro_new)),
         lineHeight = (15.21).sp,
         letterSpacing = (-0.03).sp
     ),
     h5 = TextStyle(
         fontSize = 12.sp,
         fontWeight = FontWeight(500),
-        fontFamily = FontFamily(Font(R.font.mark_pro_heavy))
+        fontFamily = FontFamily(Font(R.font.mark_pro_new))
     ),
     h6 = TextStyle(
         fontFamily = FontFamily(Font(R.font.sf_pro_d)),
@@ -125,7 +125,7 @@ val Typography = Typography(
         fontSize = 25.sp, letterSpacing = (-0.01).sp, lineHeight = 29.83.sp
     ),
     subtitle1 = TextStyle(
-        fontFamily = FontFamily(Font(R.font.mark_pro)),
+        fontFamily = FontFamily(Font(R.font.mark_pro_new)),
         fontWeight = FontWeight(400),
         fontSize = 10.sp,
         lineHeight = (12.68).sp,
@@ -133,7 +133,7 @@ val Typography = Typography(
         color = maindarckBlue
     ),
     subtitle2 = TextStyle(
-        fontFamily = FontFamily(Font(R.font.mark_pro_heavy)),
+        fontFamily = FontFamily(Font(R.font.mark_pro_new)),
         fontWeight = FontWeight(400),
         fontSize = 11.sp,
         color = GreyIcons

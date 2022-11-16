@@ -1,7 +1,6 @@
 package com.ironmeddie.test_task.presentation.ui.theme
 
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.unit.em
 
 
 
@@ -16,3 +15,7 @@ val PriceWitoutD = Color(0xFFCCCCCC)
 val Shadow = Color(0xFFA7ABC9)
 val RatingYellow = Color(0xFFFFB800)
 val Transparent = Color(0xFFB800)
+val CartCountBack = Color(0xFF282843)
+val CartIconBack = Color(0xFF36364D)
+val White20P = Color(0x33FFFFFF)
+val Grey3 = Color(0x33B3B3B3)

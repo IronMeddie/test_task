@@ -15,7 +15,7 @@
         android:theme="@style/Theme.Test_task"
         tools:targetApi="31">
         <activity
-            android:name=".presentation.MainActivity"
+            android:name=".presentation.ui.activity.MainActivity"
             android:exported="true"
             android:label="@string/app_name">
             <intent-filter>

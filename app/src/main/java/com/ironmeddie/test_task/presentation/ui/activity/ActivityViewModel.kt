@@ -1,10 +1,9 @@
-package com.ironmeddie.test_task.presentation.ui.details
+package com.ironmeddie.test_task.presentation.ui.activity
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ironmeddie.test_task.data.Repository
-import com.ironmeddie.test_task.domain.models.Details
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -13,29 +12,39 @@ import java.io.IOException
 import javax.inject.Inject
 
 @HiltViewModel
-class DetailsViewModel @Inject constructor(private val repository: Repository) : ViewModel() {
+class ActivityViewModel @Inject constructor(private val repository: Repository) : ViewModel() {
 
+    private val _splashState = MutableStateFlow(false)
+    val splashState: StateFlow<Boolean> = _splashState
 
-    private val _details : MutableStateFlow<Details> = MutableStateFlow(Details(title = "Loading.." ))
-    val details : StateFlow<Details> = _details
+    private val _cart = MutableStateFlow(0)
+    val cart: StateFlow<Int> = _cart
+
+    fun splash() {
+        _splashState.value = true
+    }
 
     init {
-        getInfo()
+        getCartCount()
     }
 
 
-    fun getInfo() =
+    fun getCartCount() {
         viewModelScope.launch {
             try {
-                val response = repository.getDetails()
+                val response = repository.getCart()
                 if (response.isSuccessful) {
                     response.body().let { res ->
-                        _details.value = res!!
+
+                        _cart.value = res?.basket?.size ?: 0
+                        Log.d("chekCode", res?.basket?.size.toString())
                     }
                 } else Log.d("chekCode", response.message())
-            }catch (e: IOException){
+            } catch (e: IOException) {
                 Log.d("chekCode", e.message.toString())
             }
 
         }
+    }
+
 }

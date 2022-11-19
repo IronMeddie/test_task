@@ -28,6 +28,7 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.ironmeddie.test_task.R
 import com.ironmeddie.test_task.domain.models.HomeStore
+import com.ironmeddie.test_task.presentation.ui.activity.Screens
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable
@@ -87,7 +88,7 @@ fun ExplorerCarusel(homeStore: List<HomeStore>, navController: NavController) {
                         .height(23.dp)
                         .clip(shape = RoundedCornerShape(5.dp))
                         .background(Color.White)
-                        .clickable { navController.navigate(R.id.navigation_details) }, contentAlignment = Alignment.Center
+                        .clickable { navController.navigate(Screens.Details.route) }, contentAlignment = Alignment.Center
                 ) {
                     Text(
                         text = "Buy now!", style = TextStyle(

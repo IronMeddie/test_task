@@ -1,4 +1,4 @@
-package com.ironmeddie.test_task.presentation.ui.favorite
+package com.ironmeddie.test_task.presentation.ui.profile
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -9,8 +9,8 @@ import androidx.compose.ui.Modifier
 
 
 @Composable
-fun FavoriteScreen(){
+fun ProfileScreen(){
     Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-        Text(text = "FavoriteScreen")
+        Text(text = "ProfileScreen")
     }
 }

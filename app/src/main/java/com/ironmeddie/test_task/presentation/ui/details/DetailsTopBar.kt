@@ -15,6 +15,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.ironmeddie.test_task.R
+import com.ironmeddie.test_task.presentation.ui.activity.Screens
 
 @Composable
 fun DetailsTopBar(iconStart: Int, iconEnd: Int, navController: NavController) {
@@ -47,7 +48,7 @@ fun DetailsTopBar(iconStart: Int, iconEnd: Int, navController: NavController) {
             modifier = Modifier
                 .height(37.dp)
                 .clickable {
-                    navController.navigate(R.id.navigation_cart)
+                    navController.navigate(Screens.Cart.route)
                 }
         ) {
             Icon(

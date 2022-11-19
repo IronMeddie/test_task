@@ -1,66 +1,90 @@
 package com.ironmeddie.test_task.presentation.ui.activity
 
 import android.os.Bundle
-import android.view.View
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.lifecycleScope
-import androidx.navigation.NavOptions
-import androidx.navigation.findNavController
+import androidx.compose.material.Scaffold
+import androidx.compose.runtime.*
+import androidx.navigation.NavGraph.Companion.findStartDestination
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.ironmeddie.test_task.R
-import com.ironmeddie.test_task.databinding.ActivityMainBinding
+import com.ironmeddie.test_task.presentation.ui.Explorer.ExplorerBottomMenu
+import com.ironmeddie.test_task.presentation.ui.Explorer.ExplorerScreen
+import com.ironmeddie.test_task.presentation.ui.cart.CartScreen
+import com.ironmeddie.test_task.presentation.ui.details.DetailScreen
+import com.ironmeddie.test_task.presentation.ui.favorite.FavoriteScreen
+import com.ironmeddie.test_task.presentation.ui.profile.ProfileScreen
+import com.ironmeddie.test_task.presentation.ui.splash.SplashScreen
+import com.ironmeddie.test_task.presentation.ui.theme.MyTheme
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.delay
 
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
+class MainActivity : ComponentActivity() {
 
     val vm by viewModels<ActivityViewModel>()
-    private var _binding: ActivityMainBinding? = null
-    private val binding get() = _binding!!
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        _binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(R.layout.splash_screen)
-        window.statusBarColor = getColor(R.color.darkblue_app)
-        window.navigationBarColor = getColor(R.color.darkblue_app)
+        setContent {
 
-
-
-        lifecycleScope.launchWhenStarted {
-            vm.splashState.collect {
-                if (!it) {
-                    delay(2000)
+            MyTheme {
+                val splash = vm.splashState.collectAsState().value
+                if (!splash) {
+                    SplashScreen()
+                    window.statusBarColor = getColor(R.color.darkblue_app)
+                    window.navigationBarColor = getColor(R.color.darkblue_app)
                     vm.splash()
-                }else{
+                } else {
                     window.statusBarColor = getColor(R.color.background_main)
                     window.navigationBarColor = getColor(R.color.background_main)
-                    setContentView(binding.root)
-
-                    val bottomMenu = binding.bottomNavMenu
-                    val navController = findNavController(R.id.nav_host)
-                    bottomMenu.setOnItemSelectedListener {
-                        if (navController.currentDestination?.id != it) {
-                            val builder = NavOptions.Builder()
-                                .setPopUpTo(R.id.mobile_navigation, inclusive = true, true)
-                            val options = builder.build()
-                            if (it == R.id.navigation_cart) navController.navigate(it)
-                            else navController.navigate(it, null, options)
+                    val navController = rememberNavController()
+                    var bottomMenuState by remember { mutableStateOf(true) }
+                    Scaffold(bottomBar = {
+                        if (bottomMenuState) {
+                            ExplorerBottomMenu(navController = navController) {
+                                navController.navigate(it) {
+                                    popUpTo(navController.graph.findStartDestination().id) {
+                                        saveState = true
+                                    }
+                                    launchSingleTop = true
+                                    restoreState = true
+                                }
+                            }
                         }
+                    }) { paddings ->
+
+                        NavHost(
+                            navController = navController,
+                            startDestination = Screens.Explorer.route
+                        ) {
+                            composable(Screens.Explorer.route) {
+                                ExplorerScreen(
+                                    hideBottomMenu = {
+                                        bottomMenuState = false
+                                    },
+                                    showBottomMenu = { bottomMenuState = true },
+                                    navController = navController,
+                                    bottoomPadding = paddings.calculateBottomPadding()
+                                )
+                            }
+                            composable(Screens.Cart.route) {
+                                bottomMenuState = false
+                                CartScreen(navController = navController) }
+                            composable(Screens.Favorite.route) { FavoriteScreen() }
+                            composable(Screens.Profile.route) { ProfileScreen() }
+                            composable(Screens.Details.route) {
+                                bottomMenuState = false
+                                DetailScreen(navController = navController) }
+                        }   // доделать переход на компосе до конца
                     }
-
                 }
-            }
-        }
 
 
-
-        lifecycleScope.launchWhenStarted {
-            vm.cart.collect {
-                cartBadge(it)
             }
         }
 
@@ -68,34 +92,7 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    fun hideBottomMenu() {
-        lifecycleScope.launchWhenCreated {
-            binding.bottomNavMenu.visibility = View.GONE
-        }
-    }
 
-    fun cartBadge(int: Int) {
-        if (int > 0) {
-            binding.bottomNavMenu.showBadge(R.id.navigation_cart, int)
-        } else binding.bottomNavMenu.dismissBadge(R.id.navigation_cart)
-    }
-
-    fun showBottomMenu() {
-        lifecycleScope.launchWhenCreated {
-            binding.bottomNavMenu.visibility = View.VISIBLE
-        }
-    }
-
-    fun itemExpBottomMenu() {
-        lifecycleScope.launchWhenCreated {
-            binding.bottomNavMenu.setItemSelected(R.id.navigation_explorer)
-        }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        _binding = null
-    }
 
 
 }

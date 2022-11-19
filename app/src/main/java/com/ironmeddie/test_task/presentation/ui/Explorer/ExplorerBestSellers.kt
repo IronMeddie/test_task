@@ -21,6 +21,7 @@ import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.ironmeddie.test_task.R
 import com.ironmeddie.test_task.domain.models.BestSeller
+import com.ironmeddie.test_task.presentation.ui.activity.Screens
 
 
 @Composable
@@ -30,7 +31,6 @@ fun ExplorerBestSellers(list: List<BestSeller>, navController: NavController) {
         Row(
             horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier
                 .padding(start = 10.dp, end = 10.dp, bottom = 13.dp)
-//                .padding(horizontal = 10.dp, vertical = 13.dp)
                 .fillMaxWidth()
         ) {
             Box(modifier = Modifier.fillMaxWidth(0.5f)) {
@@ -53,7 +53,7 @@ private fun BestSellerItem(item: BestSeller, navController: NavController) {
             .background(colorResource(id = R.color.white))
             .fillMaxSize()
             .clickable {
-                navController.navigate(R.id.navigation_details)
+                navController.navigate(Screens.Details.route)
             }, contentAlignment = Alignment.TopEnd
     ) {
         Column(modifier = Modifier.fillMaxWidth()) {

@@ -21,13 +21,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.graphics.toColorInt
 import com.ironmeddie.test_task.R
-import com.ironmeddie.test_task.domain.models.Details
+import com.ironmeddie.domain.models.Details
 import com.ironmeddie.test_task.presentation.ui.theme.GreyIcons
 import com.ironmeddie.test_task.presentation.ui.theme.GreyText
 import com.ironmeddie.test_task.presentation.ui.theme.Transparent
 
 @Composable
-fun Shop(details: Details) {
+fun Shop(details: com.ironmeddie.domain.models.Details) {
     var selectedCapacity by remember { mutableStateOf(0) }
     var selectedColor by remember { mutableStateOf(0) }
 

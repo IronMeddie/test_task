@@ -17,11 +17,11 @@ import com.gowtham.ratingbar.RatingBar
 import com.gowtham.ratingbar.RatingBarConfig
 import com.gowtham.ratingbar.RatingBarStyle
 import com.ironmeddie.test_task.R
-import com.ironmeddie.test_task.domain.models.Details
+import com.ironmeddie.domain.models.Details
 import com.ironmeddie.test_task.presentation.ui.theme.RatingYellow
 
 @Composable
-fun DetailsInfo(details: Details) {
+fun DetailsInfo(details: com.ironmeddie.domain.models.Details) {
     Box(
         modifier = Modifier
             .fillMaxSize()

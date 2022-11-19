@@ -23,16 +23,16 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.ironmeddie.test_task.R
-import com.ironmeddie.test_task.domain.models.CategoryItem
+import com.ironmeddie.domain.models.CategoryItem
 import com.ironmeddie.test_task.presentation.ui.theme.Shadow
 
 
 
 @Composable
 fun ExplorerCategoryItem(
-    item: CategoryItem,
+    item: com.ironmeddie.domain.models.CategoryItem,
     isselected: Boolean,
-    choose: (item: CategoryItem) -> Unit
+    choose: (item: com.ironmeddie.domain.models.CategoryItem) -> Unit
 ) {
     val initialColor = MaterialTheme.colors.primary
     val targetColor = MaterialTheme.colors.primaryVariant

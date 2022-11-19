@@ -16,7 +16,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.*
 import androidx.navigation.NavController
 import com.ironmeddie.test_task.R
-import com.ironmeddie.test_task.domain.models.CategoryItem
+import com.ironmeddie.domain.models.CategoryItem
 import com.ironmeddie.test_task.presentation.ui.theme.*
 import kotlinx.coroutines.launch
 
@@ -35,11 +35,11 @@ fun ExplorerScreen(
         val categories by remember {
             mutableStateOf(
                 listOf(
-                    CategoryItem("Phones", R.drawable.phone),
-                    CategoryItem("Computer", R.drawable.computer),
-                    CategoryItem("Health", R.drawable.health),
-                    CategoryItem("Books", R.drawable.books),
-                    CategoryItem("SSD", R.drawable.phone),
+                    com.ironmeddie.domain.models.CategoryItem("Phones", R.drawable.phone),
+                    com.ironmeddie.domain.models.CategoryItem("Computer", R.drawable.computer),
+                    com.ironmeddie.domain.models.CategoryItem("Health", R.drawable.health),
+                    com.ironmeddie.domain.models.CategoryItem("Books", R.drawable.books),
+                    com.ironmeddie.domain.models.CategoryItem("SSD", R.drawable.phone),
                 )
             )
         }

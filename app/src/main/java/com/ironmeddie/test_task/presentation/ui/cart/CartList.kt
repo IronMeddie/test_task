@@ -12,12 +12,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.ironmeddie.test_task.domain.models.Cart
+import com.ironmeddie.domain.models.Cart
 import com.ironmeddie.test_task.presentation.ui.theme.White20P
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
-fun CartList(cart: Cart) {
+fun CartList(cart: com.ironmeddie.domain.models.Cart) {
     AnimatedVisibility(
         visible = cart.basket.isNotEmpty(),
         enter = scaleIn(),

@@ -3,7 +3,7 @@ package com.ironmeddie.test_task.presentation.ui.activity
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ironmeddie.test_task.data.Repository
+import com.ironmeddie.data.Repository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -13,7 +13,7 @@ import java.io.IOException
 import javax.inject.Inject
 
 @HiltViewModel
-class ActivityViewModel @Inject constructor(private val repository: Repository) : ViewModel() {
+class ActivityViewModel @Inject constructor(private val repository: com.ironmeddie.data.Repository) : ViewModel() {
 
     private val _splashState = MutableStateFlow(false)
     val splashState: StateFlow<Boolean> = _splashState

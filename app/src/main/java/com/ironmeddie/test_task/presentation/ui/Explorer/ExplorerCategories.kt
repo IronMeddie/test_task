@@ -12,13 +12,13 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.ironmeddie.test_task.domain.models.CategoryItem
+import com.ironmeddie.domain.models.CategoryItem
 
 
 @Composable
 fun ExplorerCategories(
-    categories: List<CategoryItem>,
-    onItemChanged: (item: CategoryItem) -> Unit
+    categories: List<com.ironmeddie.domain.models.CategoryItem>,
+    onItemChanged: (item: com.ironmeddie.domain.models.CategoryItem) -> Unit
 ) {
     var isselected by rememberSaveable { mutableStateOf(0) }
     val listState = rememberLazyListState()

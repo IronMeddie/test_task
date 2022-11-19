@@ -18,12 +18,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.ironmeddie.test_task.R
-import com.ironmeddie.test_task.domain.models.Basket
+import com.ironmeddie.domain.models.Basket
 import com.ironmeddie.test_task.presentation.ui.theme.CartCountBack
 import com.ironmeddie.test_task.presentation.ui.theme.CartIconBack
 
 @Composable
-fun CartItem(item: Basket) {
+fun CartItem(item: com.ironmeddie.domain.models.Basket) {
     var count by remember { mutableStateOf(1) }
     Row(
         Modifier

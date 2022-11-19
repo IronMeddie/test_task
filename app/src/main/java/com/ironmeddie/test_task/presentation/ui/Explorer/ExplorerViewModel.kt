@@ -3,9 +3,9 @@ package com.ironmeddie.test_task.presentation.ui.Explorer
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.ironmeddie.test_task.data.Repository
-import com.ironmeddie.test_task.domain.models.BestSeller
-import com.ironmeddie.test_task.domain.models.HomeStore
+import com.ironmeddie.data.Repository
+import com.ironmeddie.domain.models.BestSeller
+import com.ironmeddie.domain.models.HomeStore
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

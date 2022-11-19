@@ -15,13 +15,13 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.pagerTabIndicatorOffset
 import com.google.accompanist.pager.rememberPagerState
-import com.ironmeddie.test_task.domain.models.Details
+import com.ironmeddie.domain.models.Details
 import com.ironmeddie.test_task.presentation.ui.theme.inactiveTabs
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable
-fun DetailsTabs(details: Details) {
+fun DetailsTabs(details: com.ironmeddie.domain.models.Details) {
     val pages = listOf("Shop", "Details", "Features")
     val pagerState = rememberPagerState()
     val scope = rememberCoroutineScope()

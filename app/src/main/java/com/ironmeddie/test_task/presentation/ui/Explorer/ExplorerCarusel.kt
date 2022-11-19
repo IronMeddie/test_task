@@ -27,12 +27,12 @@ import coil.compose.AsyncImage
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.ironmeddie.test_task.R
-import com.ironmeddie.test_task.domain.models.HomeStore
+import com.ironmeddie.domain.models.HomeStore
 import com.ironmeddie.test_task.presentation.ui.activity.Screens
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable
-fun ExplorerCarusel(homeStore: List<HomeStore>, navController: NavController) {
+fun ExplorerCarusel(homeStore: List<com.ironmeddie.domain.models.HomeStore>, navController: NavController) {
     HorizontalPager(
         count = homeStore.size, modifier = Modifier
             .padding(horizontal = 10.dp, vertical = 15.dp)

@@ -20,12 +20,12 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.ironmeddie.test_task.R
-import com.ironmeddie.test_task.domain.models.BestSeller
+import com.ironmeddie.domain.models.BestSeller
 import com.ironmeddie.test_task.presentation.ui.activity.Screens
 
 
 @Composable
-fun ExplorerBestSellers(list: List<BestSeller>, navController: NavController) {
+fun ExplorerBestSellers(list: List<com.ironmeddie.domain.models.BestSeller>, navController: NavController) {
 
     for (i in 0 until list.size step 2) {
         Row(
@@ -45,7 +45,7 @@ fun ExplorerBestSellers(list: List<BestSeller>, navController: NavController) {
 
 
 @Composable
-private fun BestSellerItem(item: BestSeller, navController: NavController) {
+private fun BestSellerItem(item: com.ironmeddie.domain.models.BestSeller, navController: NavController) {
     Box(
         modifier = Modifier
             .padding(horizontal = 7.dp)

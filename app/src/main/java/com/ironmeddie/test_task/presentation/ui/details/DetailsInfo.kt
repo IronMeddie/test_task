@@ -36,7 +36,8 @@ fun DetailsInfo(details: Details) {
             ) {
                 Text(
                     text = details.title,
-                    fontSize = 24.sp,
+//                    fontSize = 24.sp,
+                    fontSize = 22.sp,
                     style = MaterialTheme.typography.h1
                 )
                 Card(
@@ -62,7 +63,7 @@ fun DetailsInfo(details: Details) {
                 RatingBar(value = details.rating.toFloat(),
                     config = RatingBarConfig()
                         .activeColor(RatingYellow)
-                        .inactiveBorderColor(MaterialTheme.colors.primaryVariant)
+                        .inactiveBorderColor(RatingYellow)
                         .size(18.dp)
                         .style(RatingBarStyle.HighLighted),
                     onValueChange = {

@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.compose.animation.*
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.*
 import androidx.navigation.NavGraph.Companion.findStartDestination
@@ -45,7 +46,11 @@ class MainActivity : ComponentActivity() {
                     val navController = rememberNavController()
                     var bottomMenuState by remember { mutableStateOf(true) }
                     Scaffold(bottomBar = {
-                        if (bottomMenuState) {
+                        AnimatedVisibility(
+                            visible = bottomMenuState,
+                            enter = fadeIn(),
+                            exit = fadeOut()
+                        ) {
                             ExplorerBottomMenu(navController = navController) {
                                 navController.navigate(it) {
                                     popUpTo(navController.graph.findStartDestination().id) {

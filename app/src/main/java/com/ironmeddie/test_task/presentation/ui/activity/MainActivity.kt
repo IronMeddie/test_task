@@ -64,9 +64,7 @@ class MainActivity : ComponentActivity() {
                         ) {
                             composable(Screens.Explorer.route) {
                                 ExplorerScreen(
-                                    hideBottomMenu = {
-                                        bottomMenuState = false
-                                    },
+                                    hideBottomMenu = { bottomMenuState = false },
                                     showBottomMenu = { bottomMenuState = true },
                                     navController = navController,
                                     bottoomPadding = paddings.calculateBottomPadding()
@@ -80,7 +78,7 @@ class MainActivity : ComponentActivity() {
                             composable(Screens.Details.route) {
                                 bottomMenuState = false
                                 DetailScreen(navController = navController) }
-                        }   // доделать переход на компосе до конца
+                        }
                     }
                 }
 

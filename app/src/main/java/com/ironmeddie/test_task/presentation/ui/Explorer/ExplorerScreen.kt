@@ -47,7 +47,10 @@ fun ExplorerScreen(
         val bottomSheetState = rememberBottomSheetState(initialValue = BottomSheetValue.Collapsed)
         val scaffoldState = rememberBottomSheetScaffoldState(bottomSheetState = bottomSheetState)
         val scope = rememberCoroutineScope()
-        if (bottomSheetState.isCollapsed) showBottomMenu()
+
+        if (bottomSheetState.isCollapsed && !bottomSheetState.isAnimationRunning) showBottomMenu()
+        else hideBottomMenu()
+
         BottomSheetScaffold(
             sheetContent = {
                 ExplorerFilter(bottomSheetState)
@@ -62,7 +65,6 @@ fun ExplorerScreen(
                 item(key = "topbar") {
                     ExplorerTopBar() {
                         scope.launch {
-                            hideBottomMenu()
                             bottomSheetState.expand()
                         }
                     }

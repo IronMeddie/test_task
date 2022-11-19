@@ -20,13 +20,14 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.ironmeddie.test_task.R
+import com.ironmeddie.test_task.presentation.ui.activity.Screens
 import com.ironmeddie.test_task.presentation.ui.theme.MyTheme
 
 @Composable
 fun ExplorerBottomMenu(navController: NavController,onItem :(route: String) -> Unit){
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
-    val items = listOf("Explorer" ,"Cart", "Favorite" , "Profile")
+    val items = listOf(Screens.Explorer.route ,Screens.Cart.route, Screens.Favorite.route, Screens.Profile.route)
     val icons = listOf(R.drawable.ic_circle_12 ,R.drawable.ic_shop, R.drawable.ic_like , R.drawable.ic_group)
 
     BottomNavigation(

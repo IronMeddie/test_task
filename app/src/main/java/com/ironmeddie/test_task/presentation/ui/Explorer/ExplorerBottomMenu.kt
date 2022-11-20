@@ -1,8 +1,10 @@
 package com.ironmeddie.test_task.presentation.ui.Explorer
 
 import androidx.compose.animation.*
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
@@ -20,14 +22,13 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.ironmeddie.test_task.R
-import com.ironmeddie.test_task.presentation.ui.activity.Screens
 import com.ironmeddie.test_task.presentation.ui.theme.MyTheme
 
 @Composable
-fun ExplorerBottomMenu(navController: NavController,onItem :(route: String) -> Unit){
+fun ExplorerBottomMenu(navController: NavController,badge: Int, onItem :(route: String) -> Unit){
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
-    val items = listOf(Screens.Explorer.route ,Screens.Cart.route, Screens.Favorite.route, Screens.Profile.route)
+    val items = listOf("Explorer" ,"Cart", "Favorite" , "Profile")
     val icons = listOf(R.drawable.ic_circle_12 ,R.drawable.ic_shop, R.drawable.ic_like , R.drawable.ic_group)
 
     BottomNavigation(
@@ -35,8 +36,7 @@ fun ExplorerBottomMenu(navController: NavController,onItem :(route: String) -> U
             .clip(MaterialTheme.shapes.medium)
             .fillMaxWidth()
             .height(72.dp), backgroundColor = MaterialTheme.colors.secondary) {
-//        val selected by remember { mutableStateOf(navController.currentDestination?.route) }
-        val selected = navController.currentDestination?.route
+        val selected = currentDestination?.route
 
         
         Row(Modifier.fillMaxWidth().padding(horizontal = 16.dp)
@@ -46,17 +46,29 @@ fun ExplorerBottomMenu(navController: NavController,onItem :(route: String) -> U
                     Modifier
                         .fillMaxHeight()
                         .clickable {
-//                            selected = it
                             onItem(it)
                         },
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
-                    Icon(
-                        painter = painterResource(id = icons[i]),
-                        contentDescription = null,
-                        modifier = if (i == 0) Modifier.size(8.dp) else Modifier.size(17.dp),
-                        tint = MaterialTheme.colors.primary
-                    )
+                    Box(contentAlignment = Alignment.TopEnd) {
+                        Icon(
+                            painter = painterResource(id = icons[i]),
+                            contentDescription = null,
+                            modifier = if (i == 0) Modifier.size(8.dp) else Modifier.size(17.dp),
+                            tint = MaterialTheme.colors.primary
+                        )
+                        if (i == 1 && badge >0 ){
+                            Box(
+                                modifier = Modifier
+                                    .clip(CircleShape)
+                                    .size(12.dp)
+                                    .background(MaterialTheme.colors.primaryVariant), contentAlignment = Alignment.Center
+                            ) {
+                                Text(text = badge.toString(), fontSize = 9.sp, color = MaterialTheme.colors.secondary)
+                            }
+                        }
+
+                    }
                     AnimatedVisibility(visible = selected == it,
                         enter = fadeIn() + expandHorizontally(),
                         exit = shrinkHorizontally()
@@ -84,7 +96,7 @@ fun ExplorerBottomMenu(navController: NavController,onItem :(route: String) -> U
 private fun PreviewBottomMenu(){
     MyTheme() {
         val navController= rememberNavController()
-        ExplorerBottomMenu(navController){
+        ExplorerBottomMenu(navController, badge = 2){
             navController.navigate(it) {
                 popUpTo(navController.graph.findStartDestination().id) {
                     saveState = true

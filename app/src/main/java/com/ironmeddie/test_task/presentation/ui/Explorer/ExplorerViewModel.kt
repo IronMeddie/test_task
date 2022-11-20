@@ -1,6 +1,5 @@
 package com.ironmeddie.test_task.presentation.ui.Explorer
 
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ironmeddie.data.DataResource
@@ -26,9 +25,6 @@ class ExplorerViewModel @Inject constructor(private val repository: Repository):
         viewModelScope.launch {
             _mainScreeData.value = repository.getMainScreenSafe()
         }
-
-
-
 
 
 

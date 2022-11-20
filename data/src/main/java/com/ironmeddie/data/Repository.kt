@@ -1,11 +1,18 @@
 package com.ironmeddie.data
 
 
+import com.ironmeddie.base.baseRepository
 import javax.inject.Inject
 
-class Repository @Inject constructor(private val newsService: ApiServise) {
+class Repository @Inject constructor(private val newsService: ApiServise) : baseRepository() {
 
-     suspend fun getMainInfo() = newsService.getMainScreenInfo()
-     suspend fun getDetails() = newsService.getDetails()
-     suspend fun getCart() = newsService.getCart()
+
+     suspend fun getDetails() = safeApiCall { newsService.getDetails() }
+     suspend fun getCart() = safeApiCall { newsService.getCart() }
+     suspend fun getMainScreenSafe() = safeApiCall { newsService.getMainScreenInfo() }
+
+
+
 }
+
+

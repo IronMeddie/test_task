@@ -1,46 +1,35 @@
 package com.ironmeddie.test_task.presentation.ui.Explorer
 
-import android.util.Log
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.ironmeddie.data.DataResource
 import com.ironmeddie.data.Repository
-import com.ironmeddie.domain.models.BestSeller
-import com.ironmeddie.domain.models.HomeStore
+import com.ironmeddie.domain.models.ResponseMainScreen
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import java.io.IOException
 import javax.inject.Inject
 
 @HiltViewModel
 class ExplorerViewModel @Inject constructor(private val repository: Repository): ViewModel() {
 
-    private val _hotSales :MutableStateFlow<List<HomeStore>> = MutableStateFlow(listOf())
-    val hotSales : StateFlow<List<HomeStore>> = _hotSales
-
-    private val _bestSellers : MutableStateFlow<List<BestSeller>> = MutableStateFlow(listOf())
-    val bestSellers : StateFlow<List<BestSeller>> = _bestSellers
+    private val _mainScreeData :MutableStateFlow<DataResource<ResponseMainScreen>> = MutableStateFlow(DataResource.Loading)
+    val mainScreeData : StateFlow<DataResource<ResponseMainScreen>> = _mainScreeData
 
     init {
         getInfo()
     }
 
-
     fun getInfo() =
         viewModelScope.launch {
-            try {
-                val response = repository.getMainInfo()
-                if (response.isSuccessful) {
-                    response.body().let { res ->
-                        _hotSales.value = res!!.home_store
-                        _bestSellers.value = res.best_seller
-                    }
-                } else Log.d("chekCode", response.message())
-            }catch (e: IOException){
-                Log.d("chekCode", e.message.toString())
-            }
-
+            _mainScreeData.value = repository.getMainScreenSafe()
         }
+
+
+
+
+
 
 }

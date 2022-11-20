@@ -15,6 +15,7 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "test_task"
+
 include ':app'
 include ':data'
 include ':domain'

@@ -27,7 +27,6 @@ import coil.compose.AsyncImage
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.ironmeddie.test_task.R
-import com.ironmeddie.domain.models.HomeStore
 import com.ironmeddie.test_task.presentation.ui.activity.Screens
 
 @OptIn(ExperimentalPagerApi::class)

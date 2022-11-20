@@ -15,11 +15,13 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.*
 import androidx.navigation.NavController
-import com.ironmeddie.test_task.R
+import com.ironmeddie.data.DataResource
 import com.ironmeddie.domain.models.CategoryItem
+import com.ironmeddie.test_task.R
+import com.ironmeddie.test_task.presentation.ui.base.ReconnectButton
+import com.ironmeddie.test_task.presentation.ui.cart.LoadingText
 import com.ironmeddie.test_task.presentation.ui.theme.*
 import kotlinx.coroutines.launch
-
 
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -30,16 +32,16 @@ fun ExplorerScreen(
     viewModel: ExplorerViewModel = hiltViewModel(),
     bottoomPadding: Dp,
     navController: NavController
-){
+) {
     MyTheme {
         val categories by remember {
             mutableStateOf(
                 listOf(
-                    com.ironmeddie.domain.models.CategoryItem("Phones", R.drawable.phone),
-                    com.ironmeddie.domain.models.CategoryItem("Computer", R.drawable.computer),
-                    com.ironmeddie.domain.models.CategoryItem("Health", R.drawable.health),
-                    com.ironmeddie.domain.models.CategoryItem("Books", R.drawable.books),
-                    com.ironmeddie.domain.models.CategoryItem("SSD", R.drawable.phone),
+                    CategoryItem("Phones", R.drawable.phone),
+                    CategoryItem("Computer", R.drawable.computer),
+                    CategoryItem("Health", R.drawable.health),
+                    CategoryItem("Books", R.drawable.books),
+                    CategoryItem("SSD", R.drawable.phone),
                 )
             )
         }
@@ -50,6 +52,8 @@ fun ExplorerScreen(
 
         if (bottomSheetState.isCollapsed && !bottomSheetState.isAnimationRunning) showBottomMenu()
         else hideBottomMenu()
+
+        val data = viewModel.mainScreeData.collectAsState().value
 
         BottomSheetScaffold(
             sheetContent = {
@@ -96,14 +100,23 @@ fun ExplorerScreen(
                     )
                 }
                 item(key = "Carusel") {
-                    val listHot = viewModel.hotSales.collectAsState()
-                    AnimatedVisibility(
-                        visible = listHot.value.isNotEmpty(),
-                        enter = slideInHorizontally(),
-                        exit = slideOutHorizontally()
-                    ) {
-                        ExplorerCarusel(listHot.value, navController)
+
+
+                    when(data){
+                        is DataResource.Loading -> LoadingText()
+                        is DataResource.Failure -> ReconnectButton { viewModel.getInfo() }
+                        is DataResource.Success ->{
+                            val state = remember {
+                                MutableTransitionState(false).apply { targetState = true }
+                            }
+                            AnimatedVisibility(visibleState = state, enter = slideInHorizontally(), exit = slideOutHorizontally()) {
+                                ExplorerCarusel(data.value.home_store, navController)
+                            }
+                        }
+
+
                     }
+
 
 
                 }
@@ -116,19 +129,25 @@ fun ExplorerScreen(
                     )
                 }
                 item(key = "bestSellers") {
-                    val bestSellers = viewModel.bestSellers.collectAsState()
-                    ExplorerBestSellers(bestSellers.value,navController)
+                    if (data is DataResource.Success) {
+                        val bestSellers = data.value.best_seller
+                        ExplorerBestSellers(bestSellers, navController)
+                    }
                 }
 
                 item(key = "Spacer") {
                     Spacer(modifier = Modifier.size(bottoomPadding))
                 }
+
             }
+
+
         }
-
-
     }
+
+
 }
+
 
 
 

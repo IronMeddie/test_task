@@ -2,6 +2,18 @@ buildscript {
     dependencies {
         classpath "com.google.dagger:hilt-android-gradle-plugin:2.44.2"
     }
+    ext {
+        hiltVersion = "2.44.2"
+        libs = [
+                hilt: ('com.google.dagger:hilt-android:' + hiltVersion),
+                hilt_comp: ('com.google.dagger:hilt-compiler:')+ hiltVersion,
+                androidx_core: ('androidx.core:core-ktx:1.9.0'),
+                junit: ('junit:junit:4.13.2'),
+                junit_test: ('androidx.test.ext:junit:1.1.4'),
+                espresso: ('androidx.test.espresso:espresso-core:3.5.0'),
+        ]
+    }
+
 }
 plugins {
     id 'com.android.application' version '7.3.1' apply false

@@ -64,13 +64,13 @@ dependencies {
     implementation 'androidx.activity:activity-compose:1.6.1'
     implementation "androidx.lifecycle:lifecycle-viewmodel-compose:2.5.1"
 
-    implementation 'androidx.core:core-ktx:1.9.0'
+    implementation libs.androidx_core
     implementation 'com.google.android.material:material:1.7.0'
 
 
-    testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.4'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
+    testImplementation libs.junit
+    androidTestImplementation libs.junit_test
+    androidTestImplementation libs.espresso
 
 
 // navigation
@@ -92,8 +92,8 @@ dependencies {
     implementation "io.coil-kt:coil-compose:2.2.2"
 
     //hilt
-    implementation "com.google.dagger:hilt-android:2.44.2"
-    kapt "com.google.dagger:hilt-compiler:2.44.2"
+    implementation libs.hilt
+    kapt libs.hilt_comp
 
     implementation "androidx.hilt:hilt-navigation-compose:1.0.0"
 

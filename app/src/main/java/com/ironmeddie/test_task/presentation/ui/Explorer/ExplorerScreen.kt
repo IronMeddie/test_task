@@ -107,7 +107,9 @@ fun ExplorerScreen(
 
                     when(data){
                         is DataResource.Loading -> LoadingText()
-                        is DataResource.Failure -> ReconnectButton { viewModel.getInfo() }
+                        is DataResource.Failure -> {
+                            ReconnectButton { viewModel.getInfo() }
+                        }
                         is DataResource.Success ->{
                             val state = remember {
                                 MutableTransitionState(false).apply { targetState = true }

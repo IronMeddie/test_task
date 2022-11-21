@@ -1,6 +1,6 @@
 package com.ironmeddie.base
 
-import com.ironmeddie.base.Constants.NO_INTERNET
+import android.util.Log
 import com.ironmeddie.base.Constants.OTHER_ERROR
 import com.ironmeddie.data.DataResource
 import kotlinx.coroutines.Dispatchers
@@ -16,23 +16,22 @@ abstract class baseRepository {
             } catch (throwable: Throwable) {
                 when (throwable) {
                     is HttpException -> {
+                        Log.d("ChekCode", throwable.message().toString())
+                        Log.d("ChekCode", throwable.code().toString())
                         DataResource.Failure(false, throwable.code(),
                             throwable.response()?.errorBody()?.string()
                                 ?.let { JSONObject(it).getString("message") }, throwable.message)
                     }
                     else -> {
-                        if (throwable.message == NO_INTERNET) {
-                            DataResource.Failure(true, null, null, throwable.message)
-                        } else DataResource.Failure(true, OTHER_ERROR, null, throwable.message)
+                       DataResource.Failure(true, OTHER_ERROR, null, throwable.message)
                     }
                 }
             }
         }
     }
-
 }
 
+
 object Constants {
-    const val NO_INTERNET = "NO_INTERNET"
     const val OTHER_ERROR = 999
 }

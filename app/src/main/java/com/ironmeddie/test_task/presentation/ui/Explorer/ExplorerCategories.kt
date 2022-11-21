@@ -3,6 +3,7 @@ package com.ironmeddie.test_task.presentation.ui.Explorer
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
@@ -17,19 +18,18 @@ import com.ironmeddie.domain.models.CategoryItem
 
 @Composable
 fun ExplorerCategories(
-    categories: List<com.ironmeddie.domain.models.CategoryItem>,
-    onItemChanged: (item: com.ironmeddie.domain.models.CategoryItem) -> Unit
+    categories: List<CategoryItem>, selected: String,
+    onItemChanged: (item: String) -> Unit
 ) {
-    var isselected by rememberSaveable { mutableStateOf(0) }
+
     val listState = rememberLazyListState()
     LazyRow(
         modifier = Modifier.padding(top = 24.dp),
         contentPadding = PaddingValues(horizontal = 12.dp), state = listState,
     ) {
-        itemsIndexed(categories, key = { index, item -> item.name }) { i, item ->
-            ExplorerCategoryItem(item, i == isselected) { itemNEw ->
-                isselected = categories.indexOf(itemNEw)
-                onItemChanged(itemNEw)
+        items(categories, key = { item -> item.name }) {  item ->
+            ExplorerCategoryItem(item, item.name == selected) { itemNEw ->
+                onItemChanged(itemNEw.name)
             }
         }
     }

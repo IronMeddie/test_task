@@ -1,4 +1,4 @@
-package com.ironmeddie.domain.helper
+package com.ironmeddie.Constance
 
 class Constance {
     companion object{

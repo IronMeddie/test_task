@@ -9,6 +9,7 @@ import androidx.compose.foundation.lazy.grid.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -18,6 +19,7 @@ import androidx.navigation.NavController
 import com.ironmeddie.data.DataResource
 import com.ironmeddie.domain.models.CategoryItem
 import com.ironmeddie.test_task.R
+import com.ironmeddie.test_task.presentation.ui.activity.Categories
 import com.ironmeddie.test_task.presentation.ui.base.ReconnectButton
 import com.ironmeddie.test_task.presentation.ui.cart.LoadingText
 import com.ironmeddie.test_task.presentation.ui.theme.*
@@ -37,11 +39,11 @@ fun ExplorerScreen(
         val categories by remember {
             mutableStateOf(
                 listOf(
-                    CategoryItem("Phones", R.drawable.phone),
-                    CategoryItem("Computer", R.drawable.computer),
-                    CategoryItem("Health", R.drawable.health),
-                    CategoryItem("Books", R.drawable.books),
-                    CategoryItem("SSD", R.drawable.phone),
+                    CategoryItem(Categories.CATEGORY_PHONES, R.drawable.phone),
+                    CategoryItem(Categories.CATEGORY_COMPUTER, R.drawable.computer),
+                    CategoryItem(Categories.CATEGORY_HEALTH, R.drawable.health),
+                    CategoryItem(Categories.CATEGORY_BOOKS, R.drawable.books),
+                    CategoryItem(Categories.CATEGORY_SSD, R.drawable.phone),
                 )
             )
         }
@@ -49,11 +51,12 @@ fun ExplorerScreen(
         val bottomSheetState = rememberBottomSheetState(initialValue = BottomSheetValue.Collapsed)
         val scaffoldState = rememberBottomSheetScaffoldState(bottomSheetState = bottomSheetState)
         val scope = rememberCoroutineScope()
-
+        val data = viewModel.mainScreeData.collectAsState().value
         if (bottomSheetState.isCollapsed && !bottomSheetState.isAnimationRunning) showBottomMenu()
         else hideBottomMenu()
+        var category by rememberSaveable{ mutableStateOf(Categories.CATEGORY_PHONES) }
 
-        val data = viewModel.mainScreeData.collectAsState().value
+
 
         BottomSheetScaffold(
             sheetContent = {
@@ -83,8 +86,8 @@ fun ExplorerScreen(
                     )
                 }
                 item(key = "VerticalCategoryList") {
-                    ExplorerCategories(categories) {
-
+                    ExplorerCategories(categories, category) {
+                        category = it
                     }
                 }
                 item(key = "SearhPanel") {
@@ -113,12 +116,7 @@ fun ExplorerScreen(
                                 ExplorerCarusel(data.value.home_store, navController)
                             }
                         }
-
-
                     }
-
-
-
                 }
                 item(key = "Headers Best Seller") {
                     ExplorerHeaders(

@@ -27,7 +27,7 @@ import com.ironmeddie.test_task.presentation.ui.theme.GreyText
 import com.ironmeddie.test_task.presentation.ui.theme.Transparent
 
 @Composable
-fun Shop(details: com.ironmeddie.domain.models.Details) {
+fun Shop(details: Details) {
     var selectedCapacity by remember { mutableStateOf(0) }
     var selectedColor by remember { mutableStateOf(0) }
 

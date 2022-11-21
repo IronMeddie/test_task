@@ -5,6 +5,7 @@ import com.ironmeddie.base.Constants.OTHER_ERROR
 import com.ironmeddie.data.DataResource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import org.json.JSONObject
 import retrofit2.HttpException
 
 abstract class baseRepository {
@@ -15,7 +16,9 @@ abstract class baseRepository {
             } catch (throwable: Throwable) {
                 when (throwable) {
                     is HttpException -> {
-                        DataResource.Failure(false, throwable.code(), throwable.response()?.errorBody(), throwable.message)
+                        DataResource.Failure(false, throwable.code(),
+                            throwable.response()?.errorBody()?.string()
+                                ?.let { JSONObject(it).getString("message") }, throwable.message)
                     }
                     else -> {
                         if (throwable.message == NO_INTERNET) {

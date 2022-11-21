@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.ironmeddie.data.DataResource
 import com.ironmeddie.data.Repository
 import com.ironmeddie.domain.models.Cart
+import com.ironmeddie.domain.usecases.getDataFromApiUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -13,7 +14,7 @@ import javax.inject.Inject
 
 
 @HiltViewModel
-class CartViewModel @Inject constructor(private val repository : Repository) : ViewModel() {
+class CartViewModel @Inject constructor(private val getDataFromApiUseCase : getDataFromApiUseCase) : ViewModel() {
 
     private val _cart : MutableStateFlow<DataResource<Cart>> = MutableStateFlow(DataResource.Loading)
     val cart : StateFlow<DataResource<Cart>> = _cart
@@ -27,7 +28,7 @@ class CartViewModel @Inject constructor(private val repository : Repository) : V
     fun getInfo() =
         viewModelScope.launch {
 
-            _cart.value = repository.getCart()
+            _cart.value = getDataFromApiUseCase.getCartData()
 
         }
 

@@ -51,7 +51,7 @@ class MainActivity : ComponentActivity() {
                             enter = fadeIn(),
                             exit = fadeOut()
                         ) {
-                            var cart = vm.cart.collectAsState()
+                            val cart = vm.cart.collectAsState()
                             ExplorerBottomMenu(navController = navController,cart.value ) {
                                 navController.navigate(it) {
                                     popUpTo(navController.graph.findStartDestination().id) {

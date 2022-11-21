@@ -36,8 +36,8 @@ fun DetailsInfo(details: com.ironmeddie.domain.models.Details) {
             ) {
                 Text(
                     text = details.title,
-//                    fontSize = 24.sp,
-                    fontSize = 22.sp,
+                    fontSize = 24.sp,
+//                    fontSize = 22.sp,
                     style = MaterialTheme.typography.h1
                 )
                 Card(

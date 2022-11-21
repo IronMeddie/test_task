@@ -1,6 +1,7 @@
 package com.ironmeddie.di
 
-import com.ironmeddie.domain.helper.Constance
+import com.ironmeddie.Constance.Constance
+import com.ironmeddie.data.ApiServise
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -23,8 +24,8 @@ class DataModule {
     fun okHttpClient() = OkHttpClient.Builder().addInterceptor(logging()).build()
     @Provides
     @Singleton
-    fun provideRetrofit(baseUrl: String): com.ironmeddie.data.ApiServise =
+    fun provideRetrofit(baseUrl: String): ApiServise =
         Retrofit.Builder().baseUrl(baseUrl).addConverterFactory(GsonConverterFactory.create()).client(
             okHttpClient()
-        ).build().create(com.ironmeddie.data.ApiServise::class.java)
+        ).build().create(ApiServise::class.java)
 }

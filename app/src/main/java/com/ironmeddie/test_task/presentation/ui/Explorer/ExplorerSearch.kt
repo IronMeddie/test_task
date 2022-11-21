@@ -52,7 +52,7 @@ fun ExplorerSearch() {
 
             },
             value = search,
-            onValueChange = { search = it },
+            onValueChange = { search = it }, textStyle = MaterialTheme.typography.h4
         )
         Box(modifier = Modifier.padding()) {
             Box(

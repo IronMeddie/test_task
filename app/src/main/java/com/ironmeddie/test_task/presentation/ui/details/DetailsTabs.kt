@@ -21,7 +21,7 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable
-fun DetailsTabs(details: com.ironmeddie.domain.models.Details) {
+fun DetailsTabs(details: Details) {
     val pages = listOf("Shop", "Details", "Features")
     val pagerState = rememberPagerState()
     val scope = rememberCoroutineScope()
@@ -44,8 +44,8 @@ fun DetailsTabs(details: com.ironmeddie.domain.models.Details) {
                     Text(
                         title,
                         fontSize =
-//                            20.sp
-                        15.sp,
+                            20.sp,
+//                        15.sp,
                         style = if (pagerState.currentPage == index) MaterialTheme.typography.body1 else MaterialTheme.typography.subtitle1,
                         color = if (pagerState.currentPage == index) MaterialTheme.colors.secondary else inactiveTabs
                     )

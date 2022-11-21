@@ -18,7 +18,7 @@ import kotlin.math.absoluteValue
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable
-fun DetailsImagePager(modifier: Modifier = Modifier, images: List<String>) {
+fun DetailsImagePager(images: List<String>) {
     HorizontalPager(
         count = images.size,
         modifier = Modifier

@@ -3,7 +3,6 @@ package com.ironmeddie.test_task.presentation.ui.cart
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ironmeddie.data.DataResource
-import com.ironmeddie.data.Repository
 import com.ironmeddie.domain.models.Cart
 import com.ironmeddie.domain.usecases.getDataFromApiUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel

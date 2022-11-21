@@ -16,8 +16,6 @@ import com.ironmeddie.test_task.presentation.ui.cart.LoadingText
 
 @Composable
 fun DetailScreen(viewmodel: DetailsViewModel = hiltViewModel(), navController: NavController){
-    val details = viewmodel.details.collectAsState().value
-
             Scaffold(topBar = {
                 DetailsTopBar(
                     R.drawable.ic_arrow_back,
@@ -25,6 +23,7 @@ fun DetailScreen(viewmodel: DetailsViewModel = hiltViewModel(), navController: N
                     navController
                 )
             }) {
+                val details = viewmodel.details.collectAsState().value
                 when(details){
                     is DataResource.Failure -> ReconnectButton {
                         viewmodel.getInfo()

@@ -21,7 +21,7 @@ import com.ironmeddie.domain.models.Details
 import com.ironmeddie.test_task.presentation.ui.theme.RatingYellow
 
 @Composable
-fun DetailsInfo(details: com.ironmeddie.domain.models.Details) {
+fun DetailsInfo(details: Details) {
     Box(
         modifier = Modifier
             .fillMaxSize()

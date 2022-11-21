@@ -25,9 +25,9 @@ import com.ironmeddie.test_task.presentation.ui.activity.Screens
 
 
 @Composable
-fun ExplorerBestSellers(list: List<com.ironmeddie.domain.models.BestSeller>, navController: NavController) {
+fun ExplorerBestSellers(list: List<BestSeller>, navController: NavController) {
 
-    for (i in 0 until list.size step 2) {
+    for (i in list.indices step 2) {
         Row(
             horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier
                 .padding(start = 10.dp, end = 10.dp, bottom = 13.dp)
@@ -36,7 +36,7 @@ fun ExplorerBestSellers(list: List<com.ironmeddie.domain.models.BestSeller>, nav
             Box(modifier = Modifier.fillMaxWidth(0.5f)) {
                 BestSellerItem(list[i], navController)
             }
-            if (i <= list.size - 2) Box(modifier = Modifier.fillMaxWidth()) {
+            if (i <= list.size - 1) Box(modifier = Modifier.fillMaxWidth()) {
                 BestSellerItem(list[i + 1], navController)
             }
         }
@@ -45,7 +45,7 @@ fun ExplorerBestSellers(list: List<com.ironmeddie.domain.models.BestSeller>, nav
 
 
 @Composable
-private fun BestSellerItem(item: com.ironmeddie.domain.models.BestSeller, navController: NavController) {
+private fun BestSellerItem(item: BestSeller, navController: NavController) {
     Box(
         modifier = Modifier
             .padding(horizontal = 7.dp)

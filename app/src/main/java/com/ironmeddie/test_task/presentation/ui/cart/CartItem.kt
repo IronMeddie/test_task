@@ -23,7 +23,7 @@ import com.ironmeddie.test_task.presentation.ui.theme.CartCountBack
 import com.ironmeddie.test_task.presentation.ui.theme.CartIconBack
 
 @Composable
-fun CartItem(item: com.ironmeddie.domain.models.Basket) {
+fun CartItem(item: Basket) {
     var count by remember { mutableStateOf(1) }
     Row(
         Modifier

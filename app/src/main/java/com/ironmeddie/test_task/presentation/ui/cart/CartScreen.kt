@@ -42,7 +42,6 @@ fun CartScreen(cartViewModel: CartViewModel = hiltViewModel(), navController: Na
                 is DataResource.Failure -> ReconnectButton { cartViewModel.getInfo() }
                 is DataResource.Success -> {
 
-
                     LazyColumn(
                         modifier = Modifier
                             .padding(it)

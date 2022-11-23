@@ -1,6 +1,5 @@
 package com.ironmeddie.base
 
-import android.util.Log
 import com.ironmeddie.base.Constants.OTHER_ERROR
 import com.ironmeddie.data.DataResource
 import kotlinx.coroutines.Dispatchers
@@ -16,8 +15,6 @@ abstract class baseRepository {
             } catch (throwable: Throwable) {
                 when (throwable) {
                     is HttpException -> {
-                        Log.d("ChekCode", throwable.message().toString())
-                        Log.d("ChekCode", throwable.code().toString())
                         DataResource.Failure(false, throwable.code(),
                             throwable.response()?.errorBody()?.string()
                                 ?.let { JSONObject(it).getString("message") }, throwable.message)

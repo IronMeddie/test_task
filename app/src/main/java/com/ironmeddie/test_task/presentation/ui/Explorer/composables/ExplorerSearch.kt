@@ -54,7 +54,6 @@ fun ExplorerSearch() {
             value = search,
             onValueChange = { search = it }, textStyle = MaterialTheme.typography.h4
         )
-        Box(modifier = Modifier.padding()) {
             Box(
                 modifier = Modifier
                     .clip(CircleShape)
@@ -69,7 +68,7 @@ fun ExplorerSearch() {
                     tint = MaterialTheme.colors.primary
                 )
             }
-        }
+
 
     }
 

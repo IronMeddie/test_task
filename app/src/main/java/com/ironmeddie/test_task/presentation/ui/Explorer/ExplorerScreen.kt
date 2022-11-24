@@ -36,8 +36,7 @@ fun ExplorerScreen(
     navController: NavController
 ) {
     MyTheme {
-        val categories by remember {
-            mutableStateOf(
+        val categories =
                 listOf(
                     CategoryItem(Categories.CATEGORY_PHONES, R.drawable.phone),
                     CategoryItem(Categories.CATEGORY_COMPUTER, R.drawable.computer),
@@ -45,18 +44,17 @@ fun ExplorerScreen(
                     CategoryItem(Categories.CATEGORY_BOOKS, R.drawable.books),
                     CategoryItem(Categories.CATEGORY_SSD, R.drawable.phone),
                 )
-            )
-        }
+
+
 
         val bottomSheetState = rememberBottomSheetState(initialValue = BottomSheetValue.Collapsed)
         val scaffoldState = rememberBottomSheetScaffoldState(bottomSheetState = bottomSheetState)
         val scope = rememberCoroutineScope()
         val data = viewModel.mainScreeData.collectAsState().value
-        if (bottomSheetState.isCollapsed && !bottomSheetState.isAnimationRunning) showBottomMenu()
-        else hideBottomMenu()
         var category by rememberSaveable{ mutableStateOf(Categories.CATEGORY_PHONES) }
 
-
+        if (bottomSheetState.isCollapsed && !bottomSheetState.isAnimationRunning) showBottomMenu()
+        else hideBottomMenu()
 
         BottomSheetScaffold(
             sheetContent = {
@@ -65,11 +63,14 @@ fun ExplorerScreen(
             sheetShape = RoundedCornerShape(30.dp),
             scaffoldState = scaffoldState,
             sheetPeekHeight = 0.dp,
-            sheetElevation = 20.dp
+            sheetElevation = 20.dp,
+
         )
         { paddings ->
+
+
             LazyColumn(modifier = Modifier.padding(paddings)) {
-                item(key = "topbar") {
+                item(key = "ExplorerTopBar"){
                     ExplorerTopBar() {
                         scope.launch {
                             bottomSheetState.expand()
@@ -111,13 +112,14 @@ fun ExplorerScreen(
                             ReconnectButton { viewModel.getInfo() }
                         }
                         is DataResource.Success ->{
-                            val state = remember {
-                                MutableTransitionState(false).apply { targetState = true }
-                            }
-                            AnimatedVisibility(visibleState = state, enter = slideInHorizontally(), exit = slideOutHorizontally()) {
+//                            val state = remember {
+//                                MutableTransitionState(false).apply { targetState = true }
+//                            }
+//                            AnimatedVisibility(visibleState = state, enter = slideInHorizontally(), exit = slideOutHorizontally()) {
                                 ExplorerCarusel(data.value.home_store, navController)
-                            }
+//                            }
                         }
+                        else -> Text(text = "else what the fuck")
                     }
                 }
                 item(key = "Headers Best Seller") {
@@ -128,13 +130,19 @@ fun ExplorerScreen(
                             .fillMaxWidth()
                     )
                 }
-                item(key = "bestSellers") {
-                    if (data is DataResource.Success) {
-                        val bestSellers = data.value.best_seller
-                        ExplorerBestSellers(bestSellers, navController)
-                    }
-                }
 
+                if (data is DataResource.Success) {
+                    val list = data.value.best_seller
+                    for (i in list.indices step 2){
+                        item(key = list[i].id) {
+                            Row() {
+                                BestSellerItem(list[i],navController, true)
+                                if (i+1<list.size) BestSellerItem(list[i+1],navController)
+                            }
+                        }
+                    }
+
+                }
                 item(key = "Spacer") {
                     Spacer(modifier = Modifier.size(bottoomPadding))
                 }

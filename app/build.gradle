@@ -22,7 +22,7 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -78,9 +78,7 @@ dependencies {
     implementation "androidx.navigation:navigation-compose:$nav_version"
 
 
-    implementation 'com.github.ismaeldivita:chip-navigation-bar:1.4.0'
-
-
+    //coroutines
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4'
 
     //pager
@@ -94,7 +92,6 @@ dependencies {
     //hilt
     implementation libs.hilt
     kapt libs.hilt_comp
-
     implementation "androidx.hilt:hilt-navigation-compose:1.0.0"
 
     //rating

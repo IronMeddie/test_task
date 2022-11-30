@@ -176,5 +176,4 @@ fun MyAppTextFieldColors(
     disabledPlaceholderColor = disabledPlaceholderColor,
     focusedIndicatorColor = focusedBorderColor,
     unfocusedIndicatorColor = unfocusedBorderColor
-
 )

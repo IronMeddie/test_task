@@ -119,7 +119,7 @@ fun ExplorerScreen(
                                 ExplorerCarusel(data.value.home_store, navController)
 //                            }
                         }
-                        else -> Text(text = "else what the fuck")
+
                     }
                 }
                 item(key = "Headers Best Seller") {
@@ -135,7 +135,7 @@ fun ExplorerScreen(
                     val list = data.value.best_seller
                     for (i in list.indices step 2){
                         item(key = list[i].id) {
-                            Row() {
+                            Row(modifier = Modifier.padding(top = 15.dp)) {
                                 BestSellerItem(list[i],navController, true)
                                 if (i+1<list.size) BestSellerItem(list[i+1],navController)
                             }
